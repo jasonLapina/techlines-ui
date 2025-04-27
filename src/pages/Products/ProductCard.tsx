@@ -13,6 +13,11 @@ import {
   Typography,
 } from "@mui/material";
 import { AddShoppingCart, Favorite, FavoriteBorder } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../redux/slices/productSlice.ts";
 
 interface ProductCardProps {
   product: Product;
@@ -42,6 +47,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
       };
     }
   };
+  const dispatch = useDispatch();
+
+  const handleFavorite = (checked: boolean) => {
+    if (checked) {
+      dispatch(addToFavorites(product));
+    } else {
+      dispatch(removeFromFavorites(product._id));
+    }
+  };
+
   return (
     <Card>
       <CardActionArea>
@@ -70,6 +85,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             color="secondary"
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
+            onChange={(e) => handleFavorite(e.target.checked)}
           />
         </Tooltip>
         <Tooltip title="Add to Cart" arrow placement="top">

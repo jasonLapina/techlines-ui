@@ -1,42 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Product } from "../../types.ts";
 
 const initialState = {
-  loading: false,
-  error: null,
-  products: [],
-  product: null,
-  pagination: {},
   favoritesToggled: true,
+  favorites: JSON.parse(localStorage.getItem("favorites") ?? "[]"),
 };
 
 export const productSlice = createSlice({
   name: "productSlice",
   initialState,
   reducers: {
-    setLoading: (state) => {
-      state.loading = true;
+    addToFavorites: (state, action) => {
+      state.favorites = [...state.favorites, action.payload];
+      localStorage.setItem("favorites", JSON.stringify(state.favorites));
     },
-    setProducts: (state, action) => {
-      state.loading = false;
-      state.error = null;
-      state.products = action.payload;
-    },
-    setError: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    setPagination: (state, action) => {
-      state.loading = false;
-      state.error = null;
-      state.pagination = action.payload;
+    removeFromFavorites: (state, action) => {
+      state.favorites = state.favorites.filter(
+        (product: Product) => product._id !== action.payload,
+      );
+      localStorage.setItem("favorites", JSON.stringify(state.favorites));
     },
   },
 });
 
-export const { setLoading, setPagination, setError, setProducts } =
-  productSlice.actions;
+export const { addToFavorites, removeFromFavorites } = productSlice.actions;
 
 export default productSlice.reducer;
-
-export const productSelector = (state: { productSlice: typeof initialState }) =>
-  state.productSlice;
