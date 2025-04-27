@@ -19,6 +19,29 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const getStockChip = (): {
+    text: string;
+    color: "success" | "error" | "warning";
+  } => {
+    const { stock } = product;
+
+    if (stock > 5) {
+      return {
+        text: "In Stock",
+        color: "success", // Use "success" color for more than 5
+      };
+    } else if (stock > 0 && stock <= 5) {
+      return {
+        text: `${stock} Left`,
+        color: "warning", // Use "warning" color for 1 to 5 stocks
+      };
+    } else {
+      return {
+        text: "Out of Stock",
+        color: "error", // Use "error" color when stock is 0
+      };
+    }
+  };
   return (
     <Card>
       <CardActionArea>
@@ -28,20 +51,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
           image={product.images[0]}
         />
         <CardContent>
-          <Typography gutterBottom variant="h6">
+          <Stack flexDirection="row" useFlexGap gap={1}>
+            {product.productIsNew && <Chip color="info" label="New" />}
+            <Chip label={getStockChip().text} color={getStockChip().color} />
+          </Stack>
+          <Typography sx={{ my: 3 }} variant="h6">
             {product.name}
           </Typography>
           <Typography variant="body2">{product.subtitle}</Typography>
-          <Stack
-            sx={{ mt: 2 }}
-            flexDirection={"row"}
-            justifyContent="space-between"
-          >
-            <Typography color="success" variant="h6">
-              ${product.price}
-            </Typography>
-            <Chip color="info" label={product.category} />
-          </Stack>
+          <Typography sx={{ mt: 2 }} color="success" variant="h6">
+            ${product.price}
+          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
