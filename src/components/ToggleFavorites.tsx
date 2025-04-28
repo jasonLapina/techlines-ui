@@ -4,12 +4,14 @@ import { toggleFavorites } from "../redux/slices/productSlice.ts";
 import { useDispatch } from "react-redux";
 
 const ToggleFavorites = () => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(
+    JSON.parse(localStorage.getItem("favoritesToggled") ?? "false"),
+  );
 
   const dispatch = useDispatch();
 
   const handleSwitchChange = () => {
-    setIsChecked((prev) => !prev);
+    setIsChecked((prev: boolean) => !prev);
     dispatch(toggleFavorites());
   };
 

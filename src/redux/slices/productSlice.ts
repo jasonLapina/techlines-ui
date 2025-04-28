@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Product } from "../../types.ts";
 
 const initialState = {
-  favoritesToggled: false,
+  favoritesToggled: JSON.parse(
+    localStorage.getItem("favoritesToggled") ?? "false",
+  ),
   favorites: JSON.parse(localStorage.getItem("favorites") ?? "[]"),
 };
 
@@ -22,6 +24,7 @@ export const productSlice = createSlice({
     },
     toggleFavorites: (state) => {
       state.favoritesToggled = !state.favoritesToggled;
+      localStorage.setItem("favoritesToggled", String(state.favoritesToggled));
     },
   },
 });
