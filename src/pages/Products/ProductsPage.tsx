@@ -3,9 +3,21 @@ import Loading from "../../components/Loading.tsx";
 import ProductCard from "./ProductCard.tsx";
 import { Product } from "../../types.ts";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store.ts";
+import { useMemo } from "react";
 
 const ProductsPage = () => {
   const { data, isLoading } = useProducts();
+  const { favoritesToggled, favorites } = useSelector(
+    (state: RootState) => state.products,
+  );
+
+  const productsToRender = useMemo(() => {
+    if (isLoading || !data) return [];
+
+    return favoritesToggled ? favorites : data.products;
+  }, [data, favoritesToggled, isLoading, favorites]);
 
   if (isLoading) return <Loading />;
 
@@ -20,7 +32,7 @@ const ProductsPage = () => {
         mx: 2,
       }}
     >
-      {data.products.map((product: Product) => (
+      {productsToRender.map((product: Product) => (
         <ProductCard product={product} key={product._id} />
       ))}
     </Box>

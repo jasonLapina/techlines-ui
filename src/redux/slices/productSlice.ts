@@ -20,9 +20,13 @@ export const productSlice = createSlice({
       );
       localStorage.setItem("favorites", JSON.stringify(state.favorites));
     },
+    toggleFavorites: (state) => {
+      state.favoritesToggled = !state.favoritesToggled;
+    },
   },
 });
 
-export const { addToFavorites, removeFromFavorites } = productSlice.actions;
+export const { addToFavorites, removeFromFavorites, toggleFavorites } =
+  productSlice.actions;
 
 export default productSlice.reducer;

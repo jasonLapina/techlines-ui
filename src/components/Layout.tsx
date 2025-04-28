@@ -6,7 +6,10 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <Box sx={{ maxWidth: "1400px", margin: "0 auto", padding: "0 10px" }}>
+      <Box
+        component="main"
+        sx={{ maxWidth: "1400px", margin: "0 auto", padding: "0 10px" }}
+      >
         <Outlet />
       </Box>
     </>
