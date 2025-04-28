@@ -18,6 +18,7 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from "../../redux/slices/productSlice.ts";
+import { useNavigate } from "react-router";
 
 interface ProductCardProps {
   product: Product;
@@ -57,8 +58,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
-    <Card sx={{ maxWidth: 400 }}>
+    <Card onClick={() => navigate(`/${product._id}`)} sx={{ maxWidth: 400 }}>
       <CardActionArea>
         <CardMedia
           component="img"

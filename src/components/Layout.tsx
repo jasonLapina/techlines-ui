@@ -8,7 +8,12 @@ const Layout = () => {
       <Header />
       <Box
         component="main"
-        sx={{ maxWidth: "1400px", margin: "0 auto", padding: "0 10px" }}
+        sx={{
+          maxWidth: "1400px",
+          margin: "0 auto",
+          padding: "0 10px",
+          minHeight: "100vh",
+        }}
       >
         <Outlet />
       </Box>

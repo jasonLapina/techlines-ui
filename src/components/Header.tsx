@@ -1,17 +1,9 @@
-import { Stack, Switch, Tooltip } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { toggleFavorites } from "../redux/slices/productSlice.ts";
-import { useState } from "react";
+import { Stack } from "@mui/material";
+import ToggleFavorites from "./ToggleFavorites.tsx";
+import { useLocation } from "react-router";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  // Local state to track the checked state of the Switch
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleSwitchChange = () => {
-    setIsChecked((prev) => !prev);
-    dispatch(toggleFavorites());
-  };
+  const location = useLocation();
 
   return (
     <Stack
@@ -24,13 +16,7 @@ const Header = () => {
       }}
       component="header"
     >
-      <Tooltip
-        arrow
-        placement="top"
-        title={isChecked ? "Show All" : "Show Favorites"}
-      >
-        <Switch checked={isChecked} onChange={handleSwitchChange} />
-      </Tooltip>
+      {location.pathname === "/" && <ToggleFavorites />}
     </Stack>
   );
 };
