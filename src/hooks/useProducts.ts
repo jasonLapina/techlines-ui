@@ -8,7 +8,7 @@ const useProducts = (productId?: string) => {
     return await res.json();
   };
   return useQuery({
-    queryKey: ["products"],
+    queryKey: ["products", productId],
     queryFn: fetchProducts,
   });
 };

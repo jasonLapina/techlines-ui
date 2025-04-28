@@ -16,6 +16,8 @@ const ProductsPage = () => {
   const productsToRender = useMemo(() => {
     if (isLoading || !data) return [];
 
+    console.log(data);
+
     return favoritesToggled ? favorites : data.products;
   }, [data, favoritesToggled, isLoading, favorites]);
 
