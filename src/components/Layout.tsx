@@ -1,6 +1,6 @@
-import Header from "./Header.tsx";
 import { Outlet } from "react-router";
 import { Box } from "@mui/material";
+import Header from "./Header.tsx";
 
 const Layout = () => {
   return (
@@ -11,8 +11,10 @@ const Layout = () => {
         sx={{
           maxWidth: "1400px",
           margin: "0 auto",
-          padding: "0 10px",
-          minHeight: "100vh",
+
+          px: 2,
+          pb: 10,
+          py: 4,
         }}
       >
         <Outlet />
