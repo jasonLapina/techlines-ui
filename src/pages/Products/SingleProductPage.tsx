@@ -2,7 +2,8 @@ import useProducts from "../../hooks/useProducts.ts";
 import { useParams } from "react-router";
 import Loading from "../../components/Loading.tsx";
 import { Box, Button, Chip, Rating, Stack, Typography } from "@mui/material";
-import { Product } from "../../types.ts";
+import { Product, Review } from "../../types.ts";
+import QuantityInput from "./Components/QuantityInput.tsx";
 
 const SingleProductPage = () => {
   const { productId } = useParams();
@@ -21,6 +22,7 @@ const SingleProductPage = () => {
     numberOfReviews,
     stock,
     price,
+    reviews,
   } = data.product;
 
   return (
@@ -42,15 +44,46 @@ const SingleProductPage = () => {
         </Stack>
         <Typography sx={{ my: 2 }}>{subtitle}</Typography>
         <Typography>{description}</Typography>
-
         <Chip
           label={`IN STOCK: ${stock}`}
           variant="filled"
-          sx={{ my: 2, width: "fit-content", fontWeight: "bold" }}
+          sx={{ width: "fit-content", fontWeight: "bold", mt: 2 }}
           color="info"
         />
 
+        <Box sx={{ my: 3 }}>
+          <Typography variant="h6">Quantity</Typography>
+          <QuantityInput />
+        </Box>
+
         <Button variant="outlined">Add to cart</Button>
+        <Box>
+          <Typography sx={{ mt: 3, mb: 2 }} variant="h5">
+            Reviews
+          </Typography>
+          {reviews.map((review: Review) => (
+            <Box key={review._id}>
+              <Stack
+                alignItems="center"
+                sx={{ mb: 2 }}
+                useFlexGap
+                flexDirection="row"
+                gap={1}
+              >
+                <Rating readOnly value={review.rating} />
+                <Typography>{review.title}</Typography>
+              </Stack>
+              <Typography>{review.comment}</Typography>
+              <Typography variant="overline">
+                by <strong>{review.name}</strong>
+                {" - "}
+                <Box component="span" sx={{ opacity: 0.8 }}>
+                  {new Date(review.createdAt).toLocaleDateString()}
+                </Box>
+              </Typography>
+            </Box>
+          ))}
+        </Box>
       </Stack>
       {/*right hand side*/}
       <Stack useFlexGap gap={2}>
