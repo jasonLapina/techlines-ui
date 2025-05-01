@@ -20,6 +20,7 @@ import {
 } from "../../redux/slices/productSlice.ts";
 import { useNavigate } from "react-router";
 import { useMemo, useState } from "react";
+import { motion } from "motion/react";
 
 interface ProductCardProps {
   product: Product;
@@ -61,8 +62,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const navigate = useNavigate();
 
-  const [imageIndex, setImageIndex] = useState(0);
-
   const favIds = JSON.parse(localStorage.getItem("favorites") ?? "[]").map(
     (item: Product | undefined) => item?._id,
   );
@@ -71,24 +70,46 @@ const ProductCard = ({ product }: ProductCardProps) => {
     return favIds.includes(product._id);
   }, [product._id, favIds]);
 
+  const [hovered, setHovered] = useState(false);
+
   return (
     <Card sx={{ maxWidth: 400 }}>
-      <CardActionArea onClick={() => navigate(`/${product._id}`)}>
-        <CardMedia
-          component="img"
-          alt={product.name}
-          image={product.images[imageIndex]}
-          onMouseEnter={() =>
-            setImageIndex((prev) =>
-              product.images.length > 1 ? prev + 1 : prev,
-            )
-          }
-          onMouseLeave={() => setImageIndex(0)}
-          sx={{
-            height: "320px",
-            my: 1,
-          }}
-        />
+      <CardActionArea
+        onMouseLeave={() => setHovered(false)}
+        onMouseEnter={() => setHovered(true)}
+        onClick={() => navigate(`/${product._id}`)}
+      >
+        {!hovered && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <CardMedia
+              component="img"
+              alt={product.name}
+              image={product.images[0]}
+              sx={{
+                height: "320px",
+                my: 1,
+              }}
+            />
+          </motion.div>
+        )}
+
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <CardMedia
+              component="img"
+              alt={product.name}
+              image={product.images[1]}
+              sx={{
+                height: "320px",
+                my: 1,
+              }}
+            />
+          </motion.div>
+        )}
+
         <CardContent>
           <Stack flexDirection="row" useFlexGap gap={1}>
             {product.productIsNew && <Chip color="info" label="New" />}
