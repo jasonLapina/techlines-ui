@@ -13,6 +13,7 @@ const Header = () => {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        backgroundColor: "primary.light",
       }}
       component="header"
     >
