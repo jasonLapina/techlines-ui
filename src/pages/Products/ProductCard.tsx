@@ -72,15 +72,23 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const [hovered, setHovered] = useState(false);
 
+  const handleMouseEnter = () => {
+    if (product.images.length < 2) {
+      return;
+    } else {
+      setHovered(true);
+    }
+  };
+
   return (
     <Card sx={{ maxWidth: 400 }}>
       <CardActionArea
         onMouseLeave={() => setHovered(false)}
-        onMouseEnter={() => setHovered(true)}
+        onMouseEnter={handleMouseEnter}
         onClick={() => navigate(`/${product._id}`)}
       >
         {!hovered && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <motion.div initial={{ opacity: 0.5 }} animate={{ opacity: 1 }}>
             <CardMedia
               component="img"
               alt={product.name}
@@ -95,7 +103,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         {hovered && (
           <motion.div
-            initial={{ opacity: 0, scale: 0 }}
+            initial={{ opacity: 0.5, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
           >
             <CardMedia
