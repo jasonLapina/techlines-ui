@@ -12,6 +12,7 @@ import store from "./redux/store.ts";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Layout from "./components/Layout.tsx";
 import SingleProductPage from "./pages/Products/SingleProductPage.tsx";
+import { CssBaseline } from "@mui/material";
 
 const client = new QueryClient();
 
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={client}>
     <Provider store={store}>
       <BrowserRouter>
+        <CssBaseline />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<App />} />

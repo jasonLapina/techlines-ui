@@ -19,6 +19,7 @@ import {
   removeFromFavorites,
 } from "../../redux/slices/productSlice.ts";
 import { useNavigate } from "react-router";
+import { useMemo, useState } from "react";
 
 interface ProductCardProps {
   product: Product;
@@ -60,13 +61,33 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const navigate = useNavigate();
 
+  const [imageIndex, setImageIndex] = useState(0);
+
+  const favIds = JSON.parse(localStorage.getItem("favorites") ?? "[]").map(
+    (item: Product | undefined) => item?._id,
+  );
+
+  const isFavorite = useMemo(() => {
+    return favIds.includes(product._id);
+  }, [product._id, favIds]);
+
   return (
-    <Card onClick={() => navigate(`/${product._id}`)} sx={{ maxWidth: 400 }}>
-      <CardActionArea>
+    <Card sx={{ maxWidth: 400 }}>
+      <CardActionArea onClick={() => navigate(`/${product._id}`)}>
         <CardMedia
           component="img"
           alt={product.name}
-          image={product.images[0]}
+          image={product.images[imageIndex]}
+          onMouseEnter={() =>
+            setImageIndex((prev) =>
+              product.images.length > 1 ? prev + 1 : prev,
+            )
+          }
+          onMouseLeave={() => setImageIndex(0)}
+          sx={{
+            height: "320px",
+            my: 1,
+          }}
         />
         <CardContent>
           <Stack flexDirection="row" useFlexGap gap={1}>
@@ -89,6 +110,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
             onChange={(e) => handleFavorite(e.target.checked)}
+            checked={isFavorite}
           />
         </Tooltip>
         <Tooltip title="Add to Cart" arrow placement="top">
