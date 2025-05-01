@@ -8,7 +8,7 @@ import { RootState } from "../../redux/store.ts";
 import { useMemo } from "react";
 
 const ProductsPage = () => {
-  const { data, isLoading } = useProducts();
+  const { data, isLoading } = useProducts<{ products: Product }>();
   const { favoritesToggled, favorites } = useSelector(
     (state: RootState) => state.products,
   );
