@@ -20,6 +20,7 @@ const Header = () => {
       component="header"
     >
       <Stack direction="row" useFlexGap gap={2} alignItems="center">
+        <Link to={"/"}>UWE</Link>
         <IconButton component={Link} to="/cart">
           <ShoppingCart
             sx={{

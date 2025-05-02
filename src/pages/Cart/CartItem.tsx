@@ -31,7 +31,12 @@ const CartItem = ({ item }: CartItemProps) => {
         </Stack>
         <Stack alignItems="center" alignContent="center">
           <Typography variant="subtitle1">Quantity:</Typography>
-          <QuantityInput initValue={quantity} canRemove product={product} />
+          <QuantityInput
+            canAdd
+            initValue={quantity}
+            canRemove
+            product={product}
+          />
         </Stack>
       </Stack>
     </Paper>

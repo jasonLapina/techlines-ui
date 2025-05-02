@@ -12,20 +12,29 @@ import { Product } from "../../../types.ts";
 interface QuantityInputProps {
   initValue?: number;
   canRemove?: boolean;
-  product: Product;
+  canAdd?: boolean;
+  product?: Product;
+  onIncrement?: (quantity: number) => void;
 }
 
 const QuantityInput = ({
   initValue,
   canRemove,
+  canAdd,
   product,
+  onIncrement,
 }: QuantityInputProps) => {
   const [quantity, setQuantity] = useState(initValue ?? 1);
   const dispatch = useDispatch();
 
   const handleIncrement = () => {
-    setQuantity((prev) => prev + 1);
-    dispatch(addToCart(product));
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    if (canAdd) {
+      dispatch(addToCart({ product }));
+    } else if (onIncrement) {
+      onIncrement(newQuantity);
+    }
   };
 
   const handleDecrement = () => {
@@ -81,14 +90,14 @@ const QtyButton = ({
             color: "primary.light",
           }}
         />
-      ) : canRemove && quantity && quantity > 1 ? (
+      ) : canRemove && quantity && quantity === 1 ? (
+        <Delete color="error" />
+      ) : (
         <Remove
           sx={{
             color: "error.light",
           }}
         />
-      ) : (
-        <Delete color="error" />
       )}
     </IconButton>
   );

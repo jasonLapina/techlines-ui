@@ -6,9 +6,12 @@ import { Product, Review } from "../../types.ts";
 import QuantityInput from "./Components/QuantityInput.tsx";
 import { addToCart } from "../../redux/slices/cartSlice.ts";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 const SingleProductPage = () => {
   const { productId } = useParams();
+
+  const [quantity, setQuantity] = useState(1);
 
   const { data, isLoading } = useProducts<{ product: Product }>(productId);
   const dispatch = useDispatch();
@@ -29,7 +32,7 @@ const SingleProductPage = () => {
   } = data.product;
 
   const handleAddToCart = () => {
-    dispatch(addToCart(data.product));
+    dispatch(addToCart({ product: data.product, quantity: quantity }));
   };
 
   return (
@@ -60,7 +63,7 @@ const SingleProductPage = () => {
 
         <Box sx={{ my: 3 }}>
           <Typography variant="h6">Quantity</Typography>
-          <QuantityInput />
+          <QuantityInput onIncrement={(quantity) => setQuantity(quantity)} />
         </Box>
 
         <Button onClick={handleAddToCart} variant="outlined">

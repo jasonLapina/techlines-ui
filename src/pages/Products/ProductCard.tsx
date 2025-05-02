@@ -82,7 +82,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart(product));
+    dispatch(addToCart({ product }));
   };
 
   return (
