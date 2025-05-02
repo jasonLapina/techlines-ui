@@ -14,7 +14,7 @@ const CartPage = () => {
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: "1fr 2fr",
+        gridTemplateColumns: "1fr 1fr",
         alignItems: "start",
         columnGap: 5,
         justifyContent: "center",
