@@ -19,7 +19,7 @@ const ToggleFavorites = () => {
     <Tooltip
       arrow
       placement="top"
-      title={isChecked ? "Show All" : "Show Favorites"}
+      title={isChecked ? "Show All" : "Show Only Favorites"}
     >
       <Switch checked={isChecked} onChange={handleSwitchChange} />
     </Tooltip>

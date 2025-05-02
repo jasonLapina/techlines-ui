@@ -1,6 +1,7 @@
-import { Stack } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import ToggleFavorites from "./ToggleFavorites.tsx";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
+import { ShoppingCart } from "@mui/icons-material";
 
 const Header = () => {
   const location = useLocation();
@@ -9,7 +10,8 @@ const Header = () => {
     <Stack
       sx={{
         height: "80px",
-        p: 3,
+        px: 6,
+        py: 2,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -17,7 +19,16 @@ const Header = () => {
       }}
       component="header"
     >
-      {location.pathname === "/" && <ToggleFavorites />}
+      <Stack direction="row" useFlexGap gap={2} alignItems="center">
+        <IconButton component={Link} to="/cart">
+          <ShoppingCart
+            sx={{
+              fontSize: "2rem",
+            }}
+          />
+        </IconButton>
+      </Stack>
+      <Box>{location.pathname === "/" && <ToggleFavorites />}</Box>
     </Stack>
   );
 };
