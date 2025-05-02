@@ -14,6 +14,7 @@ import Layout from "./components/Layout.tsx";
 import SingleProductPage from "./pages/Products/SingleProductPage.tsx";
 import { CssBaseline } from "@mui/material";
 import { ReactNode, useLayoutEffect } from "react";
+import CartPage from "./pages/Cart/CartPage.tsx";
 
 const client = new QueryClient();
 
@@ -38,6 +39,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<Layout />}>
               <Route index element={<App />} />
               <Route path=":productId" element={<SingleProductPage />} />
+              <Route path="cart" element={<CartPage />} />
             </Route>
           </Routes>
         </Wrapper>
