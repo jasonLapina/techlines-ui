@@ -27,3 +27,8 @@ export interface Product {
   __v: number;
   updatedAt: string; // Date as ISO string
 }
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}
