@@ -34,13 +34,8 @@ const cartSlice = createSlice({
         (item: CartItem) => item.product._id === product._id,
       );
 
-      if (!existingItem) {
-        existingItem.quantity--;
-      } else {
-        state.items.filter(
-          (item: CartItem) => item.product._id !== product._id,
-        );
-      }
+      existingItem.quantity--;
+
       localStorage.setItem("cart", JSON.stringify(state.items));
     },
 
@@ -48,7 +43,9 @@ const cartSlice = createSlice({
     removeProductFromCart: (state, action) => {
       const product = action.payload;
 
-      state.items.filter((item: CartItem) => item.product._id !== product._id);
+      state.items = state.items.filter(
+        (item: CartItem) => item.product._id !== product._id,
+      );
       localStorage.setItem("cart", JSON.stringify(state.items));
     },
 

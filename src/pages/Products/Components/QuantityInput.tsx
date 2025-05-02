@@ -1,15 +1,41 @@
 import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Delete, Remove } from "@mui/icons-material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  addToCart,
+  removeOneFromCart,
+  removeProductFromCart,
+} from "../../../redux/slices/cartSlice.ts";
+import { Product } from "../../../types.ts";
 
-const QuantityInput = () => {
-  const [quantity, setQuantity] = useState(1);
+interface QuantityInputProps {
+  initValue?: number;
+  canRemove?: boolean;
+  product: Product;
+}
+
+const QuantityInput = ({
+  initValue,
+  canRemove,
+  product,
+}: QuantityInputProps) => {
+  const [quantity, setQuantity] = useState(initValue ?? 1);
+  const dispatch = useDispatch();
+
+  const handleIncrement = () => {
+    setQuantity((prev) => prev + 1);
+    dispatch(addToCart(product));
+  };
 
   const handleDecrement = () => {
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
-    } else {
+      dispatch(removeOneFromCart(product));
+    } else if (!canRemove && quantity === 1) {
       return;
+    } else {
+      dispatch(removeProductFromCart(product));
     }
   };
 
@@ -23,9 +49,13 @@ const QuantityInput = () => {
       }}
     >
       <Stack alignItems="center" direction="row" useFlexGap gap={2}>
-        <QtyButton onClick={handleDecrement} />
+        <QtyButton
+          quantity={quantity}
+          canRemove={canRemove}
+          onClick={handleDecrement}
+        />
         <Typography sx={{ pointerEvents: "none" }}>{quantity}</Typography>
-        <QtyButton onClick={() => setQuantity((prev) => prev + 1)} increment />
+        <QtyButton onClick={handleIncrement} increment />
       </Stack>
     </Box>
   );
@@ -34,11 +64,32 @@ const QuantityInput = () => {
 interface QtyButtonProps {
   increment?: boolean;
   onClick: () => void;
+  canRemove?: boolean;
+  quantity?: number;
 }
-const QtyButton = ({ increment = false, onClick }: QtyButtonProps) => {
+const QtyButton = ({
+  increment = false,
+  onClick,
+  canRemove,
+  quantity,
+}: QtyButtonProps) => {
   return (
     <IconButton onClick={onClick}>
-      {increment ? <Add /> : <Remove />}
+      {increment ? (
+        <Add
+          sx={{
+            color: "primary.light",
+          }}
+        />
+      ) : canRemove && quantity && quantity > 1 ? (
+        <Remove
+          sx={{
+            color: "error.light",
+          }}
+        />
+      ) : (
+        <Delete color="error" />
+      )}
     </IconButton>
   );
 };

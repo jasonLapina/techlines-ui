@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import CartItem from "./CartItem.tsx";
 import { CartItem as CartItemType } from "../../types.ts";
+import OrderSummary from "./OrderSummary.tsx";
 
 const CartPage = () => {
   const { cart } = useSelector((state: RootState) => state);
@@ -10,11 +11,23 @@ const CartPage = () => {
   if (cart.items.length === 0) return <p>Your cart is empty</p>;
 
   return (
-    <Stack>
-      {cart.items.map((item: CartItemType) => (
-        <CartItem item={item} key={item.product._id} />
-      ))}
-    </Stack>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "1fr 2fr",
+        alignItems: "start",
+        columnGap: 5,
+        justifyContent: "center",
+        justifyItems: "center",
+      }}
+    >
+      <Stack useFlexGap gap={3}>
+        {cart.items.map((item: CartItemType) => (
+          <CartItem item={item} key={item.product._id} />
+        ))}
+      </Stack>
+      <OrderSummary />
+    </Box>
   );
 };
 
