@@ -4,11 +4,14 @@ import Loading from "../../components/Loading.tsx";
 import { Box, Button, Chip, Rating, Stack, Typography } from "@mui/material";
 import { Product, Review } from "../../types.ts";
 import QuantityInput from "./Components/QuantityInput.tsx";
+import { addToCart } from "../../redux/slices/cartSlice.ts";
+import { useDispatch } from "react-redux";
 
 const SingleProductPage = () => {
   const { productId } = useParams();
 
   const { data, isLoading } = useProducts<{ product: Product }>(productId);
+  const dispatch = useDispatch();
 
   if (isLoading) return <Loading />;
   if (!data) return <p>Product not found</p>;
@@ -24,6 +27,10 @@ const SingleProductPage = () => {
     price,
     reviews,
   } = data.product;
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(data.product));
+  };
 
   return (
     <Box
@@ -56,7 +63,9 @@ const SingleProductPage = () => {
           <QuantityInput />
         </Box>
 
-        <Button variant="outlined">Add to cart</Button>
+        <Button onClick={handleAddToCart} variant="outlined">
+          Add to cart
+        </Button>
         <Box>
           <Typography sx={{ mt: 3, mb: 2 }} variant="h5">
             Reviews

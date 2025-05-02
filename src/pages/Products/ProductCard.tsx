@@ -21,6 +21,7 @@ import {
 import { useNavigate } from "react-router";
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
+import { addToCart } from "../../redux/slices/cartSlice.ts";
 
 interface ProductCardProps {
   product: Product;
@@ -78,6 +79,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
     } else {
       setHovered(true);
     }
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
   };
 
   return (
@@ -143,7 +148,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
           />
         </Tooltip>
         <Tooltip title="Add to Cart" arrow placement="top">
-          <IconButton color="primary" aria-label="add to shopping cart">
+          <IconButton
+            onClick={handleAddToCart}
+            color="primary"
+            aria-label="add to shopping cart"
+          >
             <AddShoppingCart />
           </IconButton>
         </Tooltip>
