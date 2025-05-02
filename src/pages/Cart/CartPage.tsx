@@ -16,12 +16,20 @@ const CartPage = () => {
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
         alignItems: "start",
-        columnGap: 5,
         justifyContent: "center",
         justifyItems: "center",
       }}
     >
-      <Stack useFlexGap gap={3}>
+      <Stack
+        sx={{
+          maxHeight: "80vh",
+          overflow: "auto",
+          pr: 1,
+          py: 1,
+        }}
+        useFlexGap
+        gap={3}
+      >
         {cart.items.map((item: CartItemType) => (
           <CartItem item={item} key={item.product._id} />
         ))}

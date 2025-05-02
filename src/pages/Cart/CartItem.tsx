@@ -17,7 +17,7 @@ const CartItem = ({ item }: CartItemProps) => {
           src={images[0]}
           alt={name}
           sx={{
-            width: "300px",
+            width: "400px",
             mb: 3,
           }}
         />
