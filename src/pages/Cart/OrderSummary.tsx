@@ -2,6 +2,7 @@ import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
 import { CartItem, Product } from "../../types.ts";
+import { Link } from "react-router";
 
 const multiplyPriceByQuantity = (price: number, quantity: number) => {
   return price * quantity;
@@ -22,6 +23,7 @@ const OrderSummary = () => {
         px: 2,
         py: 6,
         width: "100%",
+        boxShadow: (theme) => `0px 0px 10px 0px ${theme.palette.primary.light}`,
       }}
     >
       <Typography variant="h4" textAlign="center">
@@ -71,6 +73,22 @@ const OrderSummary = () => {
       <Button fullWidth variant="contained" sx={{ mt: 4 }}>
         Checkout
       </Button>
+      <Stack
+        sx={{ mt: 2 }}
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="row"
+      >
+        <Typography>or</Typography>
+        <Button
+          component={Link}
+          to={"/"}
+          sx={{ textTransform: "none" }}
+          variant="text"
+        >
+          continue shopping
+        </Button>
+      </Stack>
     </Paper>
   );
 };
