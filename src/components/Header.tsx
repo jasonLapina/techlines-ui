@@ -1,7 +1,12 @@
-import { Box, IconButton, Stack } from "@mui/material";
+import { Badge, Box, Stack, Tooltip } from "@mui/material";
 import ToggleFavorites from "./ToggleFavorites.tsx";
-import { Link, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import { ShoppingCart } from "@mui/icons-material";
+import Logo from "./Logo.tsx";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store.ts";
+import { CartItem } from "../types.ts";
+import Link from "./Link.tsx";
 
 const Header = () => {
   const location = useLocation();
@@ -16,21 +21,45 @@ const Header = () => {
         justifyContent: "space-between",
         alignItems: "center",
         backgroundColor: "primary.light",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
       }}
       component="header"
     >
-      <Stack direction="row" useFlexGap gap={2} alignItems="center">
-        <Link to={"/"}>UWE</Link>
-        <IconButton component={Link} to="/cart">
+      <Stack direction="row" useFlexGap gap={4} alignItems="center">
+        <Logo />
+        <ShoppingCartIcon />
+      </Stack>
+      <Box>{location.pathname === "/" && <ToggleFavorites />}</Box>
+    </Stack>
+  );
+};
+
+const ShoppingCartIcon = () => {
+  const { items } = useSelector((state: RootState) => state.cart);
+
+  const badgeContent = items.reduce((acc: number, item: CartItem) => {
+    return acc + item.quantity;
+  }, 0);
+
+  return (
+    <Tooltip title="Shopping Cart" placement="bottom" arrow>
+      <Link to="/cart">
+        <Badge
+          showZero
+          badgeContent={badgeContent}
+          color="error"
+          overlap="circular"
+        >
           <ShoppingCart
             sx={{
               fontSize: "2rem",
             }}
           />
-        </IconButton>
-      </Stack>
-      <Box>{location.pathname === "/" && <ToggleFavorites />}</Box>
-    </Stack>
+        </Badge>
+      </Link>
+    </Tooltip>
   );
 };
 
