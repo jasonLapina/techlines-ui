@@ -1,6 +1,14 @@
-import { Badge, Box, Stack, Tooltip } from "@mui/material";
+import {
+  AppBar,
+  Badge,
+  Box,
+  Button,
+  Container,
+  Stack,
+  Toolbar,
+  Tooltip,
+} from "@mui/material";
 import ToggleFavorites from "./ToggleFavorites.tsx";
-import { useLocation } from "react-router";
 import { ShoppingCart } from "@mui/icons-material";
 import Logo from "./Logo.tsx";
 import { useSelector } from "react-redux";
@@ -9,29 +17,57 @@ import { CartItem } from "../types.ts";
 import Link from "./Link.tsx";
 
 const Header = () => {
-  const location = useLocation();
-
   return (
-    <Stack
+    <AppBar
+      position="sticky"
       sx={{
-        height: "80px",
-        px: 6,
-        py: 2,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "primary.light",
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
+        backgroundColor: "primary.main",
+        boxShadow: 3,
       }}
-      component="header"
     >
-      <Stack direction="row" useFlexGap gap={4} alignItems="center">
-        <Logo />
-        <ShoppingCartIcon />
-      </Stack>
-      <Box>{location.pathname === "/" && <ToggleFavorites />}</Box>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters sx={{ height: "80px" }}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            width="100%"
+          >
+            <Stack direction="row" spacing={4} alignItems="center">
+              <Logo color="white" />
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <NavLinks />
+              </Box>
+            </Stack>
+
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <ToggleFavorites />
+              <ShoppingCartIcon />
+            </Stack>
+          </Stack>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
+
+const NavLinks = () => {
+  return (
+    <Stack direction="row" spacing={2}>
+      <Button
+        component={Link}
+        to="/products"
+        variant="text"
+        sx={{
+          color: "white",
+          fontWeight: 500,
+          "&:hover": {
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+          },
+        }}
+      >
+        Products
+      </Button>
     </Stack>
   );
 };
@@ -51,10 +87,22 @@ const ShoppingCartIcon = () => {
           badgeContent={badgeContent}
           color="error"
           overlap="circular"
+          sx={{
+            "& .MuiBadge-badge": {
+              backgroundColor: "secondary.light",
+              color: "white",
+              fontWeight: "bold",
+            },
+          }}
         >
           <ShoppingCart
             sx={{
-              fontSize: "2rem",
+              fontSize: "1.8rem",
+              color: "white",
+              transition: "transform 0.2s ease-in-out",
+              "&:hover": {
+                transform: "scale(1.1)",
+              },
             }}
           />
         </Badge>

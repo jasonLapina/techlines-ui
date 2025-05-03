@@ -14,6 +14,7 @@ const useProducts = <T>(productId?: string): UseQueryResult<T> => {
   return useQuery({
     queryKey: ["products", productId],
     queryFn: fetchProducts,
+    refetchOnWindowFocus: false,
   });
 };
 

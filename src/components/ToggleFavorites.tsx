@@ -1,4 +1,4 @@
-import { Switch, Tooltip } from "@mui/material";
+import { Box, Switch, Tooltip } from "@mui/material";
 import { useState } from "react";
 import { toggleFavorites } from "../redux/slices/productSlice.ts";
 import { useDispatch } from "react-redux";
@@ -16,13 +16,35 @@ const ToggleFavorites = () => {
   };
 
   return (
-    <Tooltip
-      arrow
-      placement="top"
-      title={isChecked ? "Show All" : "Show Only Favorites"}
-    >
-      <Switch checked={isChecked} onChange={handleSwitchChange} />
-    </Tooltip>
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Tooltip
+        arrow
+        placement="bottom"
+        title={isChecked ? "Show All Products" : "Show Only Favorites"}
+      >
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Switch
+            checked={isChecked}
+            onChange={handleSwitchChange}
+            size="small"
+            sx={{
+              "& .MuiSwitch-switchBase.Mui-checked": {
+                color: "secondary.light",
+              },
+              "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                backgroundColor: "secondary.main",
+              },
+              "& .MuiSwitch-track": {
+                backgroundColor: "rgba(255, 255, 255, 0.5)",
+              },
+              "& .MuiSwitch-thumb": {
+                backgroundColor: "white",
+              },
+            }}
+          />
+        </Box>
+      </Tooltip>
+    </Box>
   );
 };
 

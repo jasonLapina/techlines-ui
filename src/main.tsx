@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -13,8 +12,12 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import Layout from "./components/Layout.tsx";
 import SingleProductPage from "./pages/Products/SingleProductPage.tsx";
 import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import { ReactNode, useLayoutEffect } from "react";
 import CartPage from "./pages/Cart/CartPage.tsx";
+import Landing from "./pages/Landing.tsx";
+import ProductsPage from "./pages/Products/ProductsPage.tsx";
+import theme from "./theme.ts";
 
 const client = new QueryClient();
 
@@ -32,18 +35,22 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={client}>
     <Provider store={store}>
-      <BrowserRouter>
-        <Wrapper>
-          <CssBaseline />
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<App />} />
-              <Route path=":productId" element={<SingleProductPage />} />
-              <Route path="cart" element={<CartPage />} />
-            </Route>
-          </Routes>
-        </Wrapper>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Wrapper>
+            <CssBaseline />
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Landing />} />
+                <Route path="products" element={<ProductsPage />}>
+                  <Route path=":productId" element={<SingleProductPage />} />
+                </Route>
+                <Route path="cart" element={<CartPage />} />
+              </Route>
+            </Routes>
+          </Wrapper>
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   </QueryClientProvider>,
 );

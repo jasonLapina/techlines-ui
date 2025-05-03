@@ -2,12 +2,16 @@ import { DeveloperMode } from "@mui/icons-material";
 import { Box, Stack, Typography } from "@mui/material";
 import Link from "./Link.tsx";
 
-const Logo = () => {
+interface LogoProps {
+  color?: string;
+}
+
+const Logo = ({ color = "inherit" }: LogoProps) => {
   return (
-    <Box component={Link} to="/" sx={{ textDecoration: "none" }}>
-      <Stack flexDirection="row" alignItems="center" useFlexGap>
-        <DeveloperMode />
-        <Typography variant="h6">TechLaps</Typography>
+    <Box component={Link} to="/" sx={{ textDecoration: "none", color }}>
+      <Stack flexDirection="row" alignItems="center" useFlexGap gap={1}>
+        <DeveloperMode sx={{ color: "inherit" }} />
+        <Typography variant="h6" color="inherit">TechLines</Typography>
       </Stack>
     </Box>
   );
