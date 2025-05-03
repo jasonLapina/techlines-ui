@@ -7,9 +7,9 @@ const Layout = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
       }}
     >
       <Header />
@@ -17,6 +17,7 @@ const Layout = () => {
         component="main"
         sx={{
           maxWidth: "1400px",
+          width: "100%",
           margin: "0 auto",
           px: 2,
           pb: 10,
