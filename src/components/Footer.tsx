@@ -1,5 +1,5 @@
-import { Box, Container, Grid, Link, Typography, Stack } from "@mui/material";
-import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
+import { Box, Container, Grid, Link, Stack, Typography } from "@mui/material";
+import { Facebook, Instagram, LinkedIn, Twitter } from "@mui/icons-material";
 import Logo from "./Logo.tsx";
 
 const Footer = () => {
@@ -16,7 +16,7 @@ const Footer = () => {
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={4}>
+          <Box>
             <Stack spacing={2}>
               <Box sx={{ mb: 2 }}>
                 <Logo color="white" />
@@ -25,20 +25,26 @@ const Footer = () => {
                 Your one-stop shop for the latest tech products and accessories.
               </Typography>
             </Stack>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} sm={4}>
+          <Box>
             <Typography variant="h6" gutterBottom>
               Quick Links
             </Typography>
             <Stack spacing={1}>
-              <Link href="/" color="inherit" underline="hover">Home</Link>
-              <Link href="/products" color="inherit" underline="hover">Products</Link>
-              <Link href="/cart" color="inherit" underline="hover">Cart</Link>
+              <Link href="/" color="inherit" underline="hover">
+                Home
+              </Link>
+              <Link href="/products" color="inherit" underline="hover">
+                Products
+              </Link>
+              <Link href="/cart" color="inherit" underline="hover">
+                Cart
+              </Link>
             </Stack>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} sm={4}>
+          <Box>
             <Typography variant="h6" gutterBottom>
               Connect With Us
             </Typography>
@@ -56,10 +62,17 @@ const Footer = () => {
                 <LinkedIn />
               </Link>
             </Stack>
-          </Grid>
+          </Box>
         </Grid>
 
-        <Box sx={{ mt: 5, pt: 2, borderTop: "1px solid", borderColor: "rgba(255, 255, 255, 0.1)" }}>
+        <Box
+          sx={{
+            mt: 5,
+            pt: 2,
+            borderTop: "1px solid",
+            borderColor: "rgba(255, 255, 255, 0.1)",
+          }}
+        >
           <Typography variant="body2" align="center">
             © {new Date().getFullYear()} TechLines. All rights reserved.
           </Typography>
