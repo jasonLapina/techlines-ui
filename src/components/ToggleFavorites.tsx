@@ -28,14 +28,11 @@ const ToggleFavorites = () => {
             onChange={handleSwitchChange}
             size="small"
             sx={{
-              "& .MuiSwitch-switchBase.Mui-checked": {
-                color: "secondary.light",
-              },
               "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-                backgroundColor: "secondary.main",
+                backgroundColor: "rgba(255, 255, 255, 0.5)",
               },
               "& .MuiSwitch-track": {
-                backgroundColor: "rgba(255, 255, 255, 0.5)",
+                backgroundColor: "secondary.main",
               },
               "& .MuiSwitch-thumb": {
                 backgroundColor: "white",

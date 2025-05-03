@@ -15,8 +15,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store.ts";
 import { CartItem } from "../types.ts";
 import Link from "./Link.tsx";
+import { useLocation } from "react-router";
 
 const Header = () => {
+  const { pathname } = useLocation();
+
   return (
     <AppBar
       position="sticky"
@@ -41,7 +44,7 @@ const Header = () => {
             </Stack>
 
             <Stack direction="row" alignItems="center" spacing={2}>
-              <ToggleFavorites />
+              {pathname === "/products" && <ToggleFavorites />}
               <ShoppingCartIcon />
             </Stack>
           </Stack>
