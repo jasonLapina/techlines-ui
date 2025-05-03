@@ -5,7 +5,13 @@ import Footer from "./Footer.tsx";
 
 const Layout = () => {
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+      }}
+    >
       <Header />
       <Box
         component="main"
@@ -15,12 +21,13 @@ const Layout = () => {
           px: 2,
           pb: 10,
           py: 4,
+          flexGrow: 1,
         }}
       >
         <Outlet />
       </Box>
       <Footer />
-    </>
+    </Box>
   );
 };
 
