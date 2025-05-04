@@ -1,15 +1,15 @@
 import CartIcon from "./CartIcon.tsx";
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Paper,
   Popper,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
 
@@ -31,6 +31,18 @@ const CartDialog = () => {
   const anchorOpen = Boolean(anchorEl);
   const id = anchorOpen ? "simple-popper" : undefined;
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (anchorEl) setAnchorEl(null);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [anchorEl]);
+
   return (
     <>
       <CartIcon id={id} onClick={handleClick} />
@@ -42,9 +54,17 @@ const CartDialog = () => {
         open={anchorOpen}
         anchorEl={anchorEl}
       >
-        <Box sx={{ border: 1, p: 1, bgcolor: "background.paper" }}>
-          Your Cart is Empty.
-        </Box>
+        <Paper
+          sx={{
+            py: 1,
+            px: 2,
+            bgcolor: "secondary.light",
+            color: "white",
+            borderRadius: "4px",
+          }}
+        >
+          Your Cart is Empty
+        </Paper>
       </Popper>
       <Dialog
         fullWidth
