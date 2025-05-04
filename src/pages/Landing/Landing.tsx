@@ -24,7 +24,7 @@ const Landing = () => {
           color: "white",
           py: { xs: 8, md: 12 },
           mb: 8,
-          borderRadius: { xs: 0, md: "0 0 20px 20px" },
+          borderRadius: "20px",
           boxShadow: 3,
         }}
       >
