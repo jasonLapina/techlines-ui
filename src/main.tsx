@@ -15,7 +15,7 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { ReactNode, useLayoutEffect } from "react";
 import CartPage from "./pages/Cart/CartPage.tsx";
-import Landing from "./pages/Landing.tsx";
+import Landing from "./pages/Landing/Landing.tsx";
 import ProductsPage from "./pages/Products/ProductsPage.tsx";
 import theme from "./theme.ts";
 
