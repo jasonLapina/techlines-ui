@@ -1,21 +1,9 @@
-import {
-  AppBar,
-  Badge,
-  Box,
-  Button,
-  Container,
-  Stack,
-  Toolbar,
-  Tooltip,
-} from "@mui/material";
+import { AppBar, Box, Button, Container, Stack, Toolbar } from "@mui/material";
 import ToggleFavorites from "./ToggleFavorites.tsx";
-import { ShoppingCart } from "@mui/icons-material";
 import Logo from "./Logo.tsx";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store.ts";
-import { CartItem } from "../types.ts";
 import Link from "./Link.tsx";
 import { useLocation } from "react-router";
+import CartDialog from "./Cart/CartDialog.tsx";
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -45,7 +33,7 @@ const Header = () => {
 
             <Stack direction="row" alignItems="center" spacing={2}>
               {pathname === "/products" && <ToggleFavorites />}
-              <ShoppingCartIcon />
+              <CartDialog />
             </Stack>
           </Stack>
         </Toolbar>
@@ -72,45 +60,6 @@ const NavLinks = () => {
         Products
       </Button>
     </Stack>
-  );
-};
-
-const ShoppingCartIcon = () => {
-  const { items } = useSelector((state: RootState) => state.cart);
-
-  const badgeContent = items.reduce((acc: number, item: CartItem) => {
-    return acc + item.quantity;
-  }, 0);
-
-  return (
-    <Tooltip title="Shopping Cart" placement="bottom" arrow>
-      <Link to="/cart">
-        <Badge
-          showZero
-          badgeContent={badgeContent}
-          color="error"
-          overlap="circular"
-          sx={{
-            "& .MuiBadge-badge": {
-              backgroundColor: "secondary.light",
-              color: "white",
-              fontWeight: "bold",
-            },
-          }}
-        >
-          <ShoppingCart
-            sx={{
-              fontSize: "1.8rem",
-              color: "white",
-              transition: "transform 0.2s ease-in-out",
-              "&:hover": {
-                transform: "scale(1.1)",
-              },
-            }}
-          />
-        </Badge>
-      </Link>
-    </Tooltip>
   );
 };
 
