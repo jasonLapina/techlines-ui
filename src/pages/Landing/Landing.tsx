@@ -8,12 +8,22 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { LocalShipping, Security, Support } from "@mui/icons-material";
+import { Google, LocalShipping, Security, Support } from "@mui/icons-material";
 import { motion } from "motion/react";
 import Link from "../../components/Link.tsx";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
 
 const Landing = () => {
   const theme = useTheme();
+
+  useEffect(() => {
+    const userCookie = Cookies.get("user");
+    if (userCookie) {
+      const user = JSON.parse(userCookie);
+      console.log(user);
+    }
+  }, []);
 
   return (
     <Box>
@@ -94,7 +104,10 @@ const Landing = () => {
                   Shop All Products
                 </Button>
                 <Button
-                  variant="outlined"
+                  onClick={() =>
+                    (window.location.href = `${import.meta.env.VITE_API_URL}/users/auth/google`)
+                  }
+                  endIcon={<Google />}
                   size="large"
                   sx={{
                     width: "fit-content",
@@ -104,7 +117,7 @@ const Landing = () => {
                     color: "white",
                   }}
                 >
-                  Sign Up For Updates
+                  Sign in with Google
                 </Button>
               </Stack>
             </Box>
@@ -142,7 +155,7 @@ const Landing = () => {
               description: "Our support team is always available to help",
             },
           ].map((feature, index) => (
-            <Box>
+            <Box key={feature.title}>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
