@@ -8,22 +8,18 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { Google, LocalShipping, Security, Support } from "@mui/icons-material";
+import {
+  Google,
+  LocalShipping,
+  Security,
+  Shop,
+  Support,
+} from "@mui/icons-material";
 import { motion } from "motion/react";
 import Link from "../../components/Link.tsx";
-import { useEffect } from "react";
-import Cookies from "js-cookie";
 
 const Landing = () => {
   const theme = useTheme();
-
-  useEffect(() => {
-    const userCookie = Cookies.get("user");
-    if (userCookie) {
-      const user = JSON.parse(userCookie);
-      console.log(user);
-    }
-  }, []);
 
   return (
     <Box>
@@ -95,11 +91,9 @@ const Landing = () => {
                     width: "fit-content",
                     py: 1.5,
                     px: 4,
-                    backgroundColor: "secondary.main",
-                    "&:hover": {
-                      backgroundColor: "secondary.dark",
-                    },
+                    backgroundColor: "white",
                   }}
+                  endIcon={<Shop />}
                 >
                   Shop All Products
                 </Button>
@@ -109,12 +103,13 @@ const Landing = () => {
                   }
                   endIcon={<Google />}
                   size="large"
+                  variant="contained"
                   sx={{
                     width: "fit-content",
                     py: 1.5,
                     px: 4,
-                    borderColor: "secondary.main",
                     color: "white",
+                    backgroundColor: "info.main",
                   }}
                 >
                   Sign in with Google
