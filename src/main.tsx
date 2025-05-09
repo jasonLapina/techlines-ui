@@ -42,9 +42,12 @@ createRoot(document.getElementById("root")!).render(
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Landing />} />
-                <Route path="products" element={<ProductsPage />}>
-                  <Route path=":productId" element={<SingleProductPage />} />
-                </Route>
+                <Route path="products" element={<ProductsPage />} />
+                <Route
+                  path="/products/:productId"
+                  element={<SingleProductPage />}
+                />
+
                 <Route path="cart" element={<CartPage />} />
               </Route>
             </Routes>

@@ -90,7 +90,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <CardActionArea
         onMouseLeave={() => setHovered(false)}
         onMouseEnter={handleMouseEnter}
-        onClick={() => navigate(`/${product._id}`)}
+        onClick={() => navigate(`/products/${product._id}`)}
       >
         {!hovered && (
           <motion.div initial={{ opacity: 0.5 }} animate={{ opacity: 1 }}>
