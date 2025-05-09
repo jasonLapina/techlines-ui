@@ -17,9 +17,13 @@ import {
 } from "@mui/icons-material";
 import { motion } from "motion/react";
 import Link from "../../components/Link.tsx";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store.ts";
 
 const Landing = () => {
   const theme = useTheme();
+
+  const { user } = useSelector((state: RootState) => state);
 
   return (
     <Box>
@@ -97,23 +101,25 @@ const Landing = () => {
                 >
                   Shop All Products
                 </Button>
-                <Button
-                  onClick={() =>
-                    (window.location.href = `${import.meta.env.VITE_API_URL}/users/auth/google`)
-                  }
-                  endIcon={<Google />}
-                  size="large"
-                  variant="contained"
-                  sx={{
-                    width: "fit-content",
-                    py: 1.5,
-                    px: 4,
-                    color: "white",
-                    backgroundColor: "info.main",
-                  }}
-                >
-                  Sign in with Google
-                </Button>
+                {!user && (
+                  <Button
+                    onClick={() =>
+                      (window.location.href = `${import.meta.env.VITE_API_URL}/users/auth/google`)
+                    }
+                    endIcon={<Google />}
+                    size="large"
+                    variant="contained"
+                    sx={{
+                      width: "fit-content",
+                      py: 1.5,
+                      px: 4,
+                      color: "white",
+                      backgroundColor: "info.main",
+                    }}
+                  >
+                    Sign in with Google
+                  </Button>
+                )}
               </Stack>
             </Box>
           </Grid>
