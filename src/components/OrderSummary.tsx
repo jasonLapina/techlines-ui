@@ -72,7 +72,13 @@ const OrderSummary = () => {
           <Typography variant="h5">${subTotal + 5}</Typography>
         </Stack>
       </Stack>
-      <Button fullWidth variant="contained" sx={{ mt: 4 }}>
+      <Button 
+        fullWidth 
+        variant="contained" 
+        sx={{ mt: 4 }}
+        component={Link}
+        to="/checkout"
+      >
         Checkout
       </Button>
       <Stack
