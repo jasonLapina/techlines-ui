@@ -68,7 +68,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         {existingAddress ? "Edit Address" : "Add New Address"}
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
@@ -78,7 +78,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <TextField
             required
             fullWidth
@@ -88,7 +88,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
@@ -98,7 +98,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
@@ -108,7 +108,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
@@ -118,7 +118,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
@@ -128,7 +128,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
@@ -140,7 +140,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <FormControlLabel
             control={
               <Checkbox
@@ -153,7 +153,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             label="Set as default address"
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
             {onCancel && (
               <Button onClick={onCancel} variant="outlined">
