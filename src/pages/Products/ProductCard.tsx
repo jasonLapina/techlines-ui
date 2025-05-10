@@ -132,7 +132,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {product.name}
           </Typography>
           <Typography variant="body2">{product.subtitle}</Typography>
-          <Typography sx={{ mt: 2 }} color="success" variant="h6">
+          <Typography sx={{ mt: 2 }} color="info" variant="h6">
             ${product.price}
           </Typography>
         </CardContent>

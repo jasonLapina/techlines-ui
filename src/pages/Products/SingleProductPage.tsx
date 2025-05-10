@@ -43,7 +43,7 @@ const SingleProductPage = () => {
       {/*left hand side*/}
       <Stack useFlexGap gap={1}>
         <Typography variant="h3">{name}</Typography>
-        <Typography color="primary.light" variant="h5">
+        <Typography color="info" variant="h5">
           ${price}
         </Typography>
         <Stack alignItems="center" flexDirection="row" gap={1} useFlexGap>

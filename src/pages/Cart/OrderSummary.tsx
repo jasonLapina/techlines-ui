@@ -20,17 +20,19 @@ const OrderSummary = () => {
   return (
     <Paper
       sx={{
-        px: 2,
-        py: 6,
         width: "100%",
-        boxShadow: (theme) => `0px 0px 10px 0px ${theme.palette.primary.light}`,
+        px: 2,
+        py: 4,
       }}
     >
-      <Typography variant="h4" textAlign="center">
+      <Typography sx={{ fontWeight: "bold" }} textAlign="center">
         Order Summary
       </Typography>
-
-      <Stack sx={{ mt: 5 }} useFlexGap gap={2}>
+      <Stack
+        sx={{ mt: 2, maxHeight: "25vh", overflowY: "auto", pr: 1 }}
+        useFlexGap
+        gap={2}
+      >
         {cart.items.map((item: CartItem) => (
           <OrderItem item={item} key={item.product._id} />
         ))}
@@ -61,7 +63,7 @@ const OrderSummary = () => {
           alignItems="center"
           sx={{
             borderBottom: "solid 1px #00000020",
-            pb: 2,
+            pb: 1,
           }}
         >
           <Typography sx={{ mt: 2 }} variant="h5">
@@ -111,12 +113,14 @@ const OrderItem = ({ item }: OrderItemProps) => {
       <Stack flexDirection="row" useFlexGap gap={1} alignItems="center">
         <Typography fontWeight="bold">{name}</Typography>
         <Divider orientation="vertical" flexItem />
-        <Typography>
+        <Typography color={"info"} sx={{ opacity: 0.5 }}>
           ${price} x {quantity}
         </Typography>
       </Stack>
 
-      <Typography>= ${multiplyPriceByQuantity(price, quantity)}</Typography>
+      <Typography color="info">
+        ${multiplyPriceByQuantity(price, quantity)}
+      </Typography>
     </Stack>
   );
 };

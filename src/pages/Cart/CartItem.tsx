@@ -27,7 +27,9 @@ const CartItem = ({ item }: CartItemProps) => {
           alignItems="center"
         >
           <Typography variant="h5">{name}</Typography>
-          <Typography variant="h6">${price}</Typography>
+          <Typography color={"info"} variant="h6">
+            ${price}
+          </Typography>
         </Stack>
         <Stack alignItems="center" alignContent="center">
           <Typography variant="subtitle1">Quantity:</Typography>

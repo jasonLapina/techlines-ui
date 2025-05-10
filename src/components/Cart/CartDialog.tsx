@@ -1,16 +1,21 @@
 import CartIcon from "./CartIcon.tsx";
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Stack,
   Typography,
 } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
 import { clearCart } from "../../redux/slices/cartSlice.ts";
+import { CartItem as CartItemType } from "../../types.ts";
+import CartItem from "../../pages/Cart/CartItem.tsx";
+import OrderSummary from "../../pages/Cart/OrderSummary.tsx";
 
 const CartDialog = () => {
   const [open, setOpen] = useState(false);
@@ -43,6 +48,7 @@ const CartDialog = () => {
         <DialogContent
           sx={{
             minHeight: "50vh",
+            overflowY: "hidden",
           }}
         >
           {!hasItems && (
@@ -56,17 +62,14 @@ const CartDialog = () => {
               Your cart is empty. 😭
             </Typography>
           )}
+
+          {hasItems && <CartDialogContent items={items} />}
         </DialogContent>
         <DialogActions>
           {hasItems && (
-            <>
-              <Button onClick={handleClearCart} variant="text" color="error">
-                Clear Cart
-              </Button>
-              <Button variant="contained" size="large">
-                Checkout
-              </Button>
-            </>
+            <Button onClick={handleClearCart} variant="text" color="error">
+              Clear Cart
+            </Button>
           )}
           {!hasItems && <Button onClick={() => setOpen(false)}>Close</Button>}
         </DialogActions>
@@ -76,3 +79,28 @@ const CartDialog = () => {
 };
 
 export default CartDialog;
+
+const CartDialogContent = ({ items }: { items: CartItemType[] }) => {
+  return (
+    <Box
+      display="grid"
+      gridTemplateColumns="1fr .8fr"
+      alignItems="start"
+      justifyContent="center"
+      justifyItems="center"
+      columnGap={2}
+      py={5}
+    >
+      <Stack
+        sx={{ maxHeight: "64vh", overflowY: "auto", pr: 1 }}
+        useFlexGap
+        gap={1}
+      >
+        {items.map((item: CartItemType) => (
+          <CartItem item={item} key={item.product._id} />
+        ))}
+      </Stack>
+      <OrderSummary />
+    </Box>
+  );
+};
