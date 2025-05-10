@@ -66,7 +66,7 @@ const SingleProductPage = () => {
           <QuantityInput onIncrement={(quantity) => setQuantity(quantity)} />
         </Box>
 
-        <Button onClick={handleAddToCart} variant="outlined">
+        <Button onClick={handleAddToCart} variant="contained">
           Add to cart
         </Button>
         <Box>
