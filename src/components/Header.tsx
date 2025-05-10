@@ -5,9 +5,12 @@ import Link from "./Link.tsx";
 import { useLocation } from "react-router";
 import CartDialog from "./Cart/CartDialog.tsx";
 import ProfileMenu from "./ProfileMenu.tsx";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store.ts";
 
 const Header = () => {
   const { pathname } = useLocation();
+  const { userInfo } = useSelector((state: RootState) => state.user);
 
   return (
     <AppBar
@@ -34,7 +37,7 @@ const Header = () => {
 
             <Stack direction="row" alignItems="center" useFlexGap gap={4}>
               {pathname === "/products" && <ToggleFavorites />}
-              <ProfileMenu />
+              {userInfo && <ProfileMenu />}
               <CartDialog />
             </Stack>
           </Stack>
