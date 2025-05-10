@@ -3,13 +3,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store.ts";
 import { CartItem, Product } from "../types.ts";
 import { Link } from "react-router";
+import { Google } from "@mui/icons-material";
 
 const multiplyPriceByQuantity = (price: number, quantity: number) => {
   return price * quantity;
 };
 
 const OrderSummary = () => {
-  const cart = useSelector((state: RootState) => state.cart);
+  const { cart, user } = useSelector((state: RootState) => state);
 
   const subTotal = cart.items.reduce((acc: number, item: CartItem) => {
     const { price } = item.product;
@@ -72,15 +73,30 @@ const OrderSummary = () => {
           <Typography variant="h5">${subTotal + 5}</Typography>
         </Stack>
       </Stack>
-      <Button 
-        fullWidth 
-        variant="contained" 
-        sx={{ mt: 4 }}
-        component={Link}
-        to="/checkout"
-      >
-        Checkout
-      </Button>
+      {!user?.userInfo && (
+        <Button
+          endIcon={<Google />}
+          onClick={() =>
+            (window.location.href = `${import.meta.env.VITE_API_URL}/users/auth/google`)
+          }
+          fullWidth
+          variant="contained"
+          sx={{ mt: 4, backgroundColor: "info.main" }}
+        >
+          Sign in to Checkout
+        </Button>
+      )}
+      {user?.userInfo && (
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mt: 4 }}
+          component={Link}
+          to="/checkout"
+        >
+          Checkout
+        </Button>
+      )}
       <Stack
         sx={{ mt: 2 }}
         justifyContent="center"

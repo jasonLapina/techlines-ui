@@ -37,8 +37,8 @@ const Header = () => {
 
             <Stack direction="row" alignItems="center" useFlexGap gap={4}>
               {pathname === "/products" && <ToggleFavorites />}
-              <CartDialog />
               {userInfo && <ProfileDialog />}
+              <CartDialog />
             </Stack>
           </Stack>
         </Toolbar>

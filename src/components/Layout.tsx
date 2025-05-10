@@ -15,6 +15,8 @@ const Layout = () => {
   useEffect(() => {
     if (data) {
       dispatch(setUser(data));
+    } else {
+      dispatch(setUser(null));
     }
   }, [data, dispatch]);
 
