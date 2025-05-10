@@ -16,14 +16,16 @@ import {
   Support,
 } from "@mui/icons-material";
 import { motion } from "motion/react";
-import Link from "../../components/Link.tsx";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
+import { useNavigate } from "react-router";
 
 const Landing = () => {
   const theme = useTheme();
 
   const { userInfo } = useSelector((state: RootState) => state.user);
+
+  const navigate = useNavigate();
 
   return (
     <Box>
@@ -98,6 +100,7 @@ const Landing = () => {
                     backgroundColor: "white",
                   }}
                   endIcon={<Shop />}
+                  onClick={() => navigate("/products")}
                 >
                   Shop All Products
                 </Button>
@@ -226,22 +229,22 @@ const Landing = () => {
               Browse our extensive collection of the latest tech products and
               accessories. Find exactly what you need at competitive prices.
             </Typography>
-            <Link to="/products">
-              <Button
-                variant="outlined"
-                size="large"
-                sx={{
-                  py: 1.5,
-                  px: 4,
-                  backgroundColor: "secondary.main",
-                  "&:hover": {
-                    backgroundColor: "secondary.dark",
-                  },
-                }}
-              >
-                Shop All Products
-              </Button>
-            </Link>
+
+            <Button
+              variant="outlined"
+              size="large"
+              sx={{
+                py: 1.5,
+                px: 4,
+                backgroundColor: "secondary.main",
+                "&:hover": {
+                  backgroundColor: "secondary.dark",
+                },
+              }}
+              onClick={() => navigate("/products")}
+            >
+              Shop All Products
+            </Button>
           </Paper>
         </motion.div>
       </Container>
