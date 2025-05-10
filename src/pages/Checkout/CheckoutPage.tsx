@@ -104,11 +104,11 @@ const CheckoutPage = () => {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+    <Container maxWidth="xl" sx={{ mb: 4 }}>
       <Typography variant="h4" gutterBottom>
         Checkout
       </Typography>
-      <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+      <Stepper activeStep={activeStep} sx={{ pt: 2, pb: 4 }}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
