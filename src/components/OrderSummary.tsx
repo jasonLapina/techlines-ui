@@ -1,7 +1,7 @@
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store.ts";
-import { CartItem, Product } from "../../types.ts";
+import { RootState } from "../redux/store.ts";
+import { CartItem, Product } from "../types.ts";
 import { Link } from "react-router";
 
 const multiplyPriceByQuantity = (price: number, quantity: number) => {

@@ -14,10 +14,10 @@ import SingleProductPage from "./pages/Products/SingleProductPage.tsx";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { ReactNode, useLayoutEffect } from "react";
-import CartPage from "./pages/Cart/CartPage.tsx";
 import Landing from "./pages/Landing/Landing.tsx";
 import ProductsPage from "./pages/Products/ProductsPage.tsx";
 import theme from "./theme.ts";
+import CheckoutPage from "./pages/Checkout/CheckoutPage.tsx";
 
 const client = new QueryClient();
 
@@ -47,8 +47,11 @@ createRoot(document.getElementById("root")!).render(
                   path="/products/:productId"
                   element={<SingleProductPage />}
                 />
-
-                <Route path="cart" element={<CartPage />} />
+                <Route
+                  path="/products/:productId"
+                  element={<SingleProductPage />}
+                />
+                <Route path="/checkout" element={<CheckoutPage />} />
               </Route>
             </Routes>
           </Wrapper>

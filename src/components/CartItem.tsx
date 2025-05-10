@@ -1,6 +1,6 @@
-import { CartItem as CartItemType } from "../../types.ts";
+import { CartItem as CartItemType } from "../types.ts";
 import { Box, Paper, Stack, Typography } from "@mui/material";
-import QuantityInput from "../Products/Components/QuantityInput.tsx";
+import QuantityInput from "../pages/Products/Components/QuantityInput.tsx";
 
 interface CartItemProps {
   item: CartItemType;

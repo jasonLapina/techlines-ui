@@ -14,8 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
 import { clearCart } from "../../redux/slices/cartSlice.ts";
 import { CartItem as CartItemType } from "../../types.ts";
-import CartItem from "../../pages/Cart/CartItem.tsx";
-import OrderSummary from "../../pages/Cart/OrderSummary.tsx";
+import CartItem from "../CartItem.tsx";
+import OrderSummary from "../OrderSummary.tsx";
 
 const CartDialog = () => {
   const [open, setOpen] = useState(false);
