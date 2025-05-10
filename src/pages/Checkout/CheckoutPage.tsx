@@ -145,17 +145,19 @@ const CheckoutPage = () => {
                     Back
                   </Button>
                 )}
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  disabled={
-                    activeStep === 0 &&
-                    !showAddressForm &&
-                    addresses.length === 0
-                  }
-                >
-                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
-                </Button>
+                {!showAddressForm && (
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    disabled={
+                      activeStep === 0 &&
+                      !showAddressForm &&
+                      addresses.length === 0
+                    }
+                  >
+                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                  </Button>
+                )}
               </Box>
             </Box>
           )}

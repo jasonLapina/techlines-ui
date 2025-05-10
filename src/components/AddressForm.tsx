@@ -136,6 +136,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             name="phoneNumber"
             value={address.phoneNumber}
             onChange={handleChange}
+            type="tel"
           />
         </Grid>
 
