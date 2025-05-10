@@ -18,10 +18,13 @@ interface AddressSelectorProps {
   onEdit: (address: Address) => void;
 }
 
-const AddressSelector: React.FC<AddressSelectorProps> = ({ onAddNew, onEdit }) => {
+const AddressSelector: React.FC<AddressSelectorProps> = ({
+  onAddNew,
+  onEdit,
+}) => {
   const dispatch = useDispatch();
   const { addresses, selectedAddressId } = useSelector(
-    (state: RootState) => state.address
+    (state: RootState) => state.address,
   );
 
   const handleChange = (event: SelectChangeEvent<string>) => {
@@ -29,7 +32,7 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onAddNew, onEdit }) =
   };
 
   const selectedAddress = addresses.find(
-    (address: Address) => address.id === selectedAddressId
+    (address: Address) => address.id === selectedAddressId,
   );
 
   if (addresses.length === 0) {
@@ -69,12 +72,20 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({ onAddNew, onEdit }) =
 
       {selectedAddress && (
         <Box sx={{ mt: 2, p: 2, border: "1px solid #e0e0e0", borderRadius: 1 }}>
-          <Typography variant="subtitle1" gutterBottom>
+          <Typography variant="subtitle1" gutterBottom color={"info"}>
             {selectedAddress.alias} {selectedAddress.isDefault && "(Default)"}
           </Typography>
-          <Typography variant="body1">{selectedAddress.street}</Typography>
           <Typography variant="body1">
-            {selectedAddress.city}, {selectedAddress.state} {selectedAddress.postalCode}
+            <strong>Street:</strong> {selectedAddress.street}
+          </Typography>
+          <Typography variant="body1">
+            <strong>City:</strong> {selectedAddress.city}
+          </Typography>
+          <Typography variant="body1">
+            <strong>State:</strong> {selectedAddress.state}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Postal Code:</strong> {selectedAddress.postalCode}
           </Typography>
           <Typography variant="body1">{selectedAddress.country}</Typography>
           <Button
