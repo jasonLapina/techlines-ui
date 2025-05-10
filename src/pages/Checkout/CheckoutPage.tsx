@@ -15,7 +15,7 @@ import AddressForm from "../../components/AddressForm";
 import AddressSelector from "../../components/AddressSelector";
 import { Address } from "../../redux/slices/addressSlice";
 
-const steps = ["Shipping Address", "Payment Details", "Review Order"];
+const steps = ["Shipping Information", "Payment Details", "Review Order"];
 
 const CheckoutPage = () => {
   const [activeStep, setActiveStep] = useState(0);

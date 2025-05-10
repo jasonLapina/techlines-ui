@@ -10,7 +10,12 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addAddress, updateAddress, Address } from "../redux/slices/addressSlice";
+import {
+  addAddress,
+  Address,
+  removeAddress,
+  updateAddress,
+} from "../redux/slices/addressSlice";
 
 interface AddressFormProps {
   existingAddress?: Address;
@@ -33,8 +38,9 @@ const AddressForm: React.FC<AddressFormProps> = ({
       state: "",
       postalCode: "",
       country: "",
+      phoneNumber: "",
       isDefault: false,
-    }
+    },
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,6 +128,17 @@ const AddressForm: React.FC<AddressFormProps> = ({
             onChange={handleChange}
           />
         </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            label="Phone Number"
+            name="phoneNumber"
+            value={address.phoneNumber}
+            onChange={handleChange}
+          />
+        </Grid>
+
         <Grid item xs={12}>
           <FormControlLabel
             control={
@@ -145,6 +162,16 @@ const AddressForm: React.FC<AddressFormProps> = ({
             <Button type="submit" variant="contained" color="primary">
               {existingAddress ? "Update Address" : "Save Address"}
             </Button>
+            {existingAddress && (
+              <Button
+                onClick={() => dispatch(removeAddress(address.id))}
+                type="submit"
+                variant="text"
+                color="error"
+              >
+                Remove address
+              </Button>
+            )}
           </Box>
         </Grid>
       </Grid>

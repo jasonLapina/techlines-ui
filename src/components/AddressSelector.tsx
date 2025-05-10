@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Address, selectAddress } from "../redux/slices/addressSlice";
 import { RootState } from "../redux/store";
+import { User } from "../types.ts";
 
 interface AddressSelectorProps {
   onAddNew: () => void;
@@ -34,6 +35,9 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
   const selectedAddress = addresses.find(
     (address: Address) => address.id === selectedAddressId,
   );
+  const userInfo = useSelector(
+    (state: RootState) => state.user.userInfo,
+  ) as unknown as User;
 
   if (addresses.length === 0) {
     return (
@@ -51,6 +55,15 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
   return (
     <Box sx={{ mt: 2, mb: 2 }}>
       <Typography variant="h6" gutterBottom>
+        Contact Information
+      </Typography>
+      <Typography>
+        <strong>Email:</strong> {userInfo.email}
+      </Typography>
+      <Typography>
+        <strong>Phone:</strong> {selectedAddress?.phoneNumber || "Not provided"}
+      </Typography>
+      <Typography sx={{ mt: 3 }} variant="h6" gutterBottom>
         Delivery Address
       </Typography>
       <FormControl fullWidth sx={{ mb: 2 }}>
@@ -69,7 +82,6 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
           ))}
         </Select>
       </FormControl>
-
       {selectedAddress && (
         <Box sx={{ mt: 2, p: 2, border: "1px solid #e0e0e0", borderRadius: 1 }}>
           <Typography variant="subtitle1" gutterBottom color={"info"}>
@@ -87,7 +99,10 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
           <Typography variant="body1">
             <strong>Postal Code:</strong> {selectedAddress.postalCode}
           </Typography>
-          <Typography variant="body1">{selectedAddress.country}</Typography>
+          <Typography variant="body1">
+            <strong>Country:</strong> {selectedAddress.country}
+          </Typography>
+
           <Button
             variant="outlined"
             size="small"
@@ -98,7 +113,6 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
           </Button>
         </Box>
       )}
-
       <Button
         variant="outlined"
         color="primary"
