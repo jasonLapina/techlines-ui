@@ -6,10 +6,8 @@ import { CartItem } from "../../types.ts";
 
 const CartIcon = ({
   onClick,
-  id,
 }: {
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
-  id: string | undefined;
 }) => {
   const { items } = useSelector((state: RootState) => state.cart);
 
@@ -19,7 +17,6 @@ const CartIcon = ({
 
   return (
     <Badge
-      aria-describedby={id}
       onClick={(e) => onClick(e)}
       showZero
       badgeContent={badgeContent}
@@ -36,7 +33,6 @@ const CartIcon = ({
     >
       <ShoppingCart
         sx={{
-          // fontSize: "1.8rem",
           color: "white",
           transition: "transform 0.2s ease-in-out",
           "&:hover": {

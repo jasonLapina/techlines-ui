@@ -5,44 +5,18 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Paper,
-  Popper,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
 import { clearCart } from "../../redux/slices/cartSlice.ts";
 
 const CartDialog = () => {
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const { cart } = useSelector((state: RootState) => state);
   const { items } = cart;
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (items.length === 0) {
-      setAnchorEl(anchorEl ? null : event.currentTarget);
-    } else {
-      setOpen(true);
-    }
-  };
-
-  const anchorOpen = Boolean(anchorEl);
-  const id = anchorOpen ? "simple-popper" : undefined;
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (anchorEl) setAnchorEl(null);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [anchorEl]);
 
   const dispatch = useDispatch();
 
@@ -51,33 +25,14 @@ const CartDialog = () => {
     setOpen(false);
   };
 
+  const hasItems = useMemo(() => items?.length > 0, [items]);
+
   return (
     <>
-      <CartIcon id={id} onClick={handleClick} />
-      <Popper
-        sx={{
-          zIndex: "modal",
-        }}
-        id={id}
-        open={anchorOpen}
-        anchorEl={anchorEl}
-      >
-        <Paper
-          sx={{
-            py: 1,
-            px: 2,
-            bgcolor: "secondary.light",
-            color: "white",
-            borderRadius: "4px",
-          }}
-        >
-          Your Cart is Empty
-        </Paper>
-      </Popper>
-
+      <CartIcon onClick={() => setOpen(true)} />
       <Dialog
         fullWidth
-        maxWidth={"xl"}
+        maxWidth={hasItems ? "xl" : "sm"}
         open={open}
         onClose={() => setOpen(false)}
       >
@@ -89,14 +44,31 @@ const CartDialog = () => {
           sx={{
             minHeight: "50vh",
           }}
-        ></DialogContent>
+        >
+          {!hasItems && (
+            <Typography
+              sx={{
+                textAlign: "center",
+                mt: 10,
+              }}
+              variant="h5"
+            >
+              Your cart is empty. 😭
+            </Typography>
+          )}
+        </DialogContent>
         <DialogActions>
-          <Button onClick={handleClearCart} variant="text" color="error">
-            Clear Cart
-          </Button>
-          <Button variant="contained" size="large">
-            Checkout
-          </Button>
+          {hasItems && (
+            <>
+              <Button onClick={handleClearCart} variant="text" color="error">
+                Clear Cart
+              </Button>
+              <Button variant="contained" size="large">
+                Checkout
+              </Button>
+            </>
+          )}
+          {!hasItems && <Button onClick={() => setOpen(false)}>Close</Button>}
         </DialogActions>
       </Dialog>
     </>
