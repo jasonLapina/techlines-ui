@@ -63,7 +63,9 @@ const CartDialog = () => {
             </Typography>
           )}
 
-          {hasItems && <CartDialogContent items={items} />}
+          {hasItems && (
+            <CartDialogContent onClose={() => setOpen(false)} items={items} />
+          )}
         </DialogContent>
         <DialogActions>
           {hasItems && (
@@ -80,7 +82,13 @@ const CartDialog = () => {
 
 export default CartDialog;
 
-const CartDialogContent = ({ items }: { items: CartItemType[] }) => {
+const CartDialogContent = ({
+  items,
+  onClose,
+}: {
+  items: CartItemType[];
+  onClose: () => void;
+}) => {
   return (
     <Box
       display="grid"
@@ -100,7 +108,7 @@ const CartDialogContent = ({ items }: { items: CartItemType[] }) => {
           <CartItem item={item} key={item.product._id} />
         ))}
       </Stack>
-      <OrderSummary />
+      <OrderSummary onNavigate={onClose} />
     </Box>
   );
 };

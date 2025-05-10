@@ -9,7 +9,11 @@ const multiplyPriceByQuantity = (price: number, quantity: number) => {
   return price * quantity;
 };
 
-const OrderSummary = () => {
+interface OrderSummaryProps {
+  onNavigate: () => void;
+}
+
+const OrderSummary = ({ onNavigate }: OrderSummaryProps) => {
   const { cart, user } = useSelector((state: RootState) => state);
 
   const subTotal = cart.items.reduce((acc: number, item: CartItem) => {
@@ -93,6 +97,7 @@ const OrderSummary = () => {
           sx={{ mt: 4 }}
           component={Link}
           to="/checkout"
+          onClick={onNavigate}
         >
           Checkout
         </Button>
@@ -106,9 +111,10 @@ const OrderSummary = () => {
         <Typography>or</Typography>
         <Button
           component={Link}
-          to={"/"}
+          to={"/products"}
           sx={{ textTransform: "none" }}
           variant="text"
+          onClick={onNavigate}
         >
           continue shopping
         </Button>
