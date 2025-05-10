@@ -4,7 +4,7 @@ import Logo from "./Logo.tsx";
 import Link from "./Link.tsx";
 import { useLocation } from "react-router";
 import CartDialog from "./Cart/CartDialog.tsx";
-import ProfileDialog from "./ProfileMenu.tsx";
+import ProfileDialog from "./ProfileDialog.tsx";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store.ts";
 

@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -45,12 +44,18 @@ export default function ProfileDialog() {
       >
         <DialogTitle>My account</DialogTitle>
         <DialogContent>
-          <Stack useFlexGap gap={3} alignContent="center" alignItems="center">
-            <Box
-              component="img"
+          <Stack
+            useFlexGap
+            gap={2}
+            sx={{ my: 5 }}
+            alignContent="center"
+            alignItems="center"
+          >
+            <Avatar
+              sx={{ width: 56, height: 56 }}
+              onClick={() => setOpen(true)}
               src={googleImage}
               alt={name}
-              sx={{ width: "100px", height: "100px", borderRadius: "50%" }}
             />
             <Typography>
               <strong>Name:</strong> {name}
