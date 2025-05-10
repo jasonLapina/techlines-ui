@@ -10,8 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store.ts";
+import { clearCart } from "../../redux/slices/cartSlice.ts";
 
 const CartDialog = () => {
   const [open, setOpen] = useState(false);
@@ -43,6 +44,13 @@ const CartDialog = () => {
     };
   }, [anchorEl]);
 
+  const dispatch = useDispatch();
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+    setOpen(false);
+  };
+
   return (
     <>
       <CartIcon id={id} onClick={handleClick} />
@@ -66,6 +74,7 @@ const CartDialog = () => {
           Your Cart is Empty
         </Paper>
       </Popper>
+
       <Dialog
         fullWidth
         maxWidth={"xl"}
@@ -82,7 +91,7 @@ const CartDialog = () => {
           }}
         ></DialogContent>
         <DialogActions>
-          <Button variant="text" color="error">
+          <Button onClick={handleClearCart} variant="text" color="error">
             Clear Cart
           </Button>
           <Button variant="contained" size="large">

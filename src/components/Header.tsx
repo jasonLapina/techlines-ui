@@ -4,6 +4,7 @@ import Logo from "./Logo.tsx";
 import Link from "./Link.tsx";
 import { useLocation } from "react-router";
 import CartDialog from "./Cart/CartDialog.tsx";
+import ProfileMenu from "./ProfileMenu.tsx";
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -31,8 +32,9 @@ const Header = () => {
               </Box>
             </Stack>
 
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack direction="row" alignItems="center" useFlexGap gap={4}>
               {pathname === "/products" && <ToggleFavorites />}
+              <ProfileMenu />
               <CartDialog />
             </Stack>
           </Stack>

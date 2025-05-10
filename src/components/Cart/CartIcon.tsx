@@ -36,7 +36,7 @@ const CartIcon = ({
     >
       <ShoppingCart
         sx={{
-          fontSize: "1.8rem",
+          // fontSize: "1.8rem",
           color: "white",
           transition: "transform 0.2s ease-in-out",
           "&:hover": {
