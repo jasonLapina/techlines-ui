@@ -14,15 +14,15 @@ export default function ProfileMenu() {
     setAnchorEl(null);
   };
 
+  const handleLogout = async () => {
+    await fetch(`${import.meta.env.VITE_API_URL}/users/logout`, {
+      credentials: "include",
+    }).then(() => (window.location.href = "/"));
+  };
+
   return (
     <div>
-      <IconButton
-        // id="basic-button"
-        // aria-controls={open ? "basic-menu" : undefined}
-        // aria-haspopup="true"
-        // aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
+      <IconButton onClick={handleClick}>
         <Person sx={{ color: "white" }} />
       </IconButton>
       <Menu
@@ -32,7 +32,7 @@ export default function ProfileMenu() {
         onClose={handleClose}
       >
         <AccountDialog />
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );

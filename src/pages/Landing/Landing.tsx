@@ -23,7 +23,7 @@ import { RootState } from "../../redux/store.ts";
 const Landing = () => {
   const theme = useTheme();
 
-  const { user } = useSelector((state: RootState) => state);
+  const { userInfo } = useSelector((state: RootState) => state.user);
 
   return (
     <Box>
@@ -101,7 +101,7 @@ const Landing = () => {
                 >
                   Shop All Products
                 </Button>
-                {!user && (
+                {!userInfo && (
                   <Button
                     onClick={() =>
                       (window.location.href = `${import.meta.env.VITE_API_URL}/users/auth/google`)
