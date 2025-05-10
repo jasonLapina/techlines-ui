@@ -58,7 +58,7 @@ const SingleProductPage = () => {
           label={`IN STOCK: ${stock}`}
           variant="filled"
           sx={{ width: "fit-content", fontWeight: "bold", mt: 2 }}
-          color="info"
+          color="warning"
         />
 
         <Box sx={{ my: 3 }}>
