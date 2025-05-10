@@ -4,7 +4,7 @@ import Logo from "./Logo.tsx";
 import Link from "./Link.tsx";
 import { useLocation } from "react-router";
 import CartDialog from "./Cart/CartDialog.tsx";
-import ProfileMenu from "./ProfileMenu.tsx";
+import ProfileDialog from "./ProfileMenu.tsx";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store.ts";
 
@@ -37,8 +37,8 @@ const Header = () => {
 
             <Stack direction="row" alignItems="center" useFlexGap gap={4}>
               {pathname === "/products" && <ToggleFavorites />}
-              {userInfo && <ProfileMenu />}
               <CartDialog />
+              {userInfo && <ProfileDialog />}
             </Stack>
           </Stack>
         </Toolbar>

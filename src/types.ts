@@ -32,3 +32,14 @@ export interface CartItem {
   product: Product;
   quantity: number;
 }
+
+export interface User {
+  name: string;
+  email: string;
+  active: boolean;
+  isAdmin: boolean;
+  googleId?: string;
+  googleImage?: string;
+  _id: string;
+  firstLogin: boolean;
+}

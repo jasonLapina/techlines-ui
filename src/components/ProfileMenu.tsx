@@ -1,47 +1,71 @@
-import * as React from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { IconButton } from "@mui/material";
-import { Person } from "@mui/icons-material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store.ts";
+import { User } from "../types.ts";
 
-export default function ProfileMenu() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+export default function ProfileDialog() {
   const handleLogout = async () => {
     await fetch(`${import.meta.env.VITE_API_URL}/users/logout`, {
       credentials: "include",
     }).then(() => (window.location.href = "/"));
   };
+  const [open, setOpen] = useState(false);
 
-  return (
-    <div>
-      <IconButton onClick={handleClick}>
-        <Person sx={{ color: "white" }} />
-      </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
-        <AccountDialog />
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      </Menu>
-    </div>
-  );
-}
+  const userInfo = useSelector((state: RootState) => state.user.userInfo);
 
-const AccountDialog = () => {
+  const { name, email, googleImage } = userInfo as unknown as User;
+
   return (
     <>
-      <MenuItem>My account</MenuItem>
+      <Tooltip title="My account" arrow>
+        <Avatar
+          sx={{ cursor: "pointer", width: 32, height: 32 }}
+          onClick={() => setOpen(true)}
+          src={googleImage}
+          alt={name}
+        />
+      </Tooltip>
+      <Dialog
+        maxWidth="sm"
+        fullWidth
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        <DialogTitle>My account</DialogTitle>
+        <DialogContent>
+          <Stack useFlexGap gap={3} alignContent="center" alignItems="center">
+            <Box
+              component="img"
+              src={googleImage}
+              alt={name}
+              sx={{ width: "100px", height: "100px", borderRadius: "50%" }}
+            />
+            <Typography>
+              <strong>Name:</strong> {name}
+            </Typography>
+            <Typography>
+              <strong>Email:</strong> {email}
+            </Typography>
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleLogout} variant="text">
+            Logout
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
-};
+}
