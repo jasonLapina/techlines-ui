@@ -11,12 +11,13 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Product, Review } from "../../types.ts";
+import { Product, Review, User } from "../../types.ts";
 import QuantityInput from "./Components/QuantityInput.tsx";
 import { addToCart } from "../../redux/slices/cartSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo, useState } from "react";
 import { RootState } from "../../redux/store.ts";
+import { useMutation } from "@tanstack/react-query";
 
 const SingleProductPage = () => {
   const { productId } = useParams();
@@ -25,11 +26,42 @@ const SingleProductPage = () => {
 
   const [isReviewOpen, setIsReviewOpen] = useState(false);
 
-  const { data, isLoading } = useProducts<{ product: Product }>(productId);
+  const { data, isLoading, refetch } = useProducts<{ product: Product }>(
+    productId,
+  );
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state: RootState) => state.user);
+  const userInfo = useSelector(
+    (state: RootState) => state.user.userInfo,
+  ) as unknown as User;
 
   const hasUser = useMemo(() => userInfo !== null, [userInfo]);
+
+  const addReviewFn = async () => {
+    const payload = {
+      userId: userInfo?._id,
+      review: {
+        title: "Awesome product",
+        comment: "I love this product",
+        rating: 5,
+      },
+      productId: productId,
+    };
+    await fetch(`${import.meta.env.VITE_API_URL}/reviews/post`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      credentials: "include",
+    });
+  };
+  const { mutate } = useMutation({
+    mutationFn: addReviewFn,
+    onSuccess: () => {
+      refetch();
+      setIsReviewOpen(false);
+    },
+  });
 
   if (isLoading) return <Loading />;
   if (!data) return <p>Product not found</p>;
@@ -52,6 +84,10 @@ const SingleProductPage = () => {
 
   const handleReviewInit = () => {
     setIsReviewOpen((prev) => !prev);
+  };
+
+  const handleSubmitReview = async () => {
+    mutate();
   };
 
   return (
@@ -98,7 +134,9 @@ const SingleProductPage = () => {
               Reviews
             </Typography>
             <Stack direction="row" useFlexGap gap={1} alignItems="center">
-              {isReviewOpen && <Button>Submit</Button>}
+              {isReviewOpen && (
+                <Button onClick={handleSubmitReview}>Submit</Button>
+              )}
               <Tooltip title={hasUser ? null : "Must be signed in"}>
                 <Button
                   onClick={handleReviewInit}
