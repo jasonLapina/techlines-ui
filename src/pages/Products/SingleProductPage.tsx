@@ -1,20 +1,35 @@
 import useProducts from "../../hooks/useProducts.ts";
 import { useParams } from "react-router";
 import Loading from "../../components/Loading.tsx";
-import { Box, Button, Chip, Rating, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Rating,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Product, Review } from "../../types.ts";
 import QuantityInput from "./Components/QuantityInput.tsx";
 import { addToCart } from "../../redux/slices/cartSlice.ts";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useMemo, useState } from "react";
+import { RootState } from "../../redux/store.ts";
 
 const SingleProductPage = () => {
   const { productId } = useParams();
 
   const [quantity, setQuantity] = useState(1);
 
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+
   const { data, isLoading } = useProducts<{ product: Product }>(productId);
   const dispatch = useDispatch();
+  const { userInfo } = useSelector((state: RootState) => state.user);
+
+  const hasUser = useMemo(() => userInfo !== null, [userInfo]);
 
   if (isLoading) return <Loading />;
   if (!data) return <p>Product not found</p>;
@@ -33,6 +48,10 @@ const SingleProductPage = () => {
 
   const handleAddToCart = () => {
     dispatch(addToCart({ product: data.product, quantity: quantity }));
+  };
+
+  const handleReviewInit = () => {
+    setIsReviewOpen((prev) => !prev);
   };
 
   return (
@@ -70,9 +89,35 @@ const SingleProductPage = () => {
           Add to cart
         </Button>
         <Box>
-          <Typography sx={{ mt: 3, mb: 2 }} variant="h5">
-            Reviews
-          </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography sx={{ mt: 3, mb: 2 }} variant="h5">
+              Reviews
+            </Typography>
+            <Stack direction="row" useFlexGap gap={1} alignItems="center">
+              {isReviewOpen && <Button>Submit</Button>}
+              <Tooltip title={hasUser ? null : "Must be signed in"}>
+                <Button
+                  onClick={handleReviewInit}
+                  disabled={!hasUser}
+                  variant="text"
+                  sx={{ color: isReviewOpen ? "error.light" : "primary.light" }}
+                >
+                  {isReviewOpen ? "Cancel" : "Add a review"}
+                </Button>
+              </Tooltip>
+            </Stack>
+          </Stack>
+          {isReviewOpen && (
+            <TextField
+              sx={{ mb: 3, mt: 1 }}
+              fullWidth
+              placeholder="Comment your review here"
+            />
+          )}
           {reviews.map((review: Review) => (
             <Box key={review._id}>
               <Stack
