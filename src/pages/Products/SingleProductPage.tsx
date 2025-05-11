@@ -6,6 +6,7 @@ import {
   Button,
   Chip,
   Rating,
+  Snackbar,
   Stack,
   TextField,
   Tooltip,
@@ -15,12 +16,14 @@ import { Product, Review, User } from "../../types.ts";
 import QuantityInput from "./Components/QuantityInput.tsx";
 import { addToCart } from "../../redux/slices/cartSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { RootState } from "../../redux/store.ts";
 import { useMutation } from "@tanstack/react-query";
 
 const SingleProductPage = () => {
   const { productId } = useParams();
+
+  const [reviewSnack, setReviewSnack] = useState({ open: false, message: "" });
 
   const [quantity, setQuantity] = useState(1);
 
@@ -36,12 +39,15 @@ const SingleProductPage = () => {
 
   const hasUser = useMemo(() => userInfo !== null, [userInfo]);
 
+  const titleRef = useRef<HTMLInputElement>(null);
+  const commentRef = useRef<HTMLInputElement>(null);
+
   const addReviewFn = async () => {
     const payload = {
       userId: userInfo?._id,
       review: {
-        title: "Awesome product",
-        comment: "I love this product",
+        title: titleRef.current?.value,
+        comment: commentRef.current?.value,
         rating: 5,
       },
       productId: productId,
@@ -60,6 +66,7 @@ const SingleProductPage = () => {
     onSuccess: () => {
       refetch();
       setIsReviewOpen(false);
+      setReviewSnack({ open: true, message: "Review submitted" });
     },
   });
 
@@ -87,112 +94,139 @@ const SingleProductPage = () => {
   };
 
   const handleSubmitReview = async () => {
-    mutate();
+    if (!titleRef.current?.value || !commentRef.current?.value) {
+      return;
+    } else {
+      mutate();
+      setIsReviewOpen(false);
+      setReviewSnack({ open: true, message: "Review submitted" });
+    }
   };
 
   return (
-    <Box
-      sx={{ display: "grid", alignItems: "start" }}
-      gridTemplateColumns="2fr 1fr"
-    >
-      {/*left hand side*/}
-      <Stack useFlexGap gap={1}>
-        <Typography variant="h3">{name}</Typography>
-        <Typography color="info" variant="h5">
-          ${price}
-        </Typography>
-        <Stack alignItems="center" flexDirection="row" gap={1} useFlexGap>
-          <Rating value={rating} precision={0.5} readOnly />
-          <Typography sx={{ fontWeight: "bold" }}>
-            {numberOfReviews} Review{numberOfReviews > 1 ? "s" : ""}
+    <>
+      <Snackbar
+        open={reviewSnack.open}
+        autoHideDuration={6000}
+        message="Review submitted"
+      />
+      <Box
+        sx={{ display: "grid", alignItems: "start" }}
+        gridTemplateColumns="2fr 1fr"
+      >
+        {/*left hand side*/}
+        <Stack useFlexGap gap={1}>
+          <Typography variant="h3">{name}</Typography>
+          <Typography color="info" variant="h5">
+            ${price}
           </Typography>
-        </Stack>
-        <Typography sx={{ my: 2 }}>{subtitle}</Typography>
-        <Typography>{description}</Typography>
-        <Chip
-          label={`IN STOCK: ${stock}`}
-          variant="filled"
-          sx={{ width: "fit-content", fontWeight: "bold", mt: 2 }}
-          color="warning"
-        />
-
-        <Box sx={{ my: 3 }}>
-          <Typography variant="h6">Quantity</Typography>
-          <QuantityInput onIncrement={(quantity) => setQuantity(quantity)} />
-        </Box>
-
-        <Button onClick={handleAddToCart} variant="contained">
-          Add to cart
-        </Button>
-        <Box>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Typography sx={{ mt: 3, mb: 2 }} variant="h5">
-              Reviews
+          <Stack alignItems="center" flexDirection="row" gap={1} useFlexGap>
+            <Rating value={rating} precision={0.5} readOnly />
+            <Typography sx={{ fontWeight: "bold" }}>
+              {numberOfReviews} Review{numberOfReviews > 1 ? "s" : ""}
             </Typography>
-            <Stack direction="row" useFlexGap gap={1} alignItems="center">
-              {isReviewOpen && (
-                <Button onClick={handleSubmitReview}>Submit</Button>
-              )}
-              <Tooltip title={hasUser ? null : "Must be signed in"}>
-                <Button
-                  onClick={handleReviewInit}
-                  disabled={!hasUser}
-                  variant="text"
-                  sx={{ color: isReviewOpen ? "error.light" : "primary.light" }}
-                >
-                  {isReviewOpen ? "Cancel" : "Add a review"}
-                </Button>
-              </Tooltip>
-            </Stack>
           </Stack>
-          {isReviewOpen && (
-            <TextField
-              sx={{ mb: 3, mt: 1 }}
-              fullWidth
-              placeholder="Comment your review here"
-            />
-          )}
-          {reviews.map((review: Review) => (
-            <Box key={review._id}>
-              <Stack
-                alignItems="center"
-                sx={{ mb: 2 }}
-                useFlexGap
-                flexDirection="row"
-                gap={1}
-              >
-                <Rating readOnly value={review.rating} />
-                <Typography>{review.title}</Typography>
-              </Stack>
-              <Typography>{review.comment}</Typography>
-              <Typography variant="overline">
-                by <strong>{review.name}</strong>
-                {" - "}
-                <Box component="span" sx={{ opacity: 0.8 }}>
-                  {new Date(review.createdAt).toLocaleDateString()}
-                </Box>
-              </Typography>
-            </Box>
-          ))}
-        </Box>
-      </Stack>
-      {/*right hand side*/}
-      <Stack useFlexGap gap={2}>
-        {images.map((img) => (
-          <Box
-            maxWidth="600px"
-            component="img"
-            src={img}
-            alt={name}
-            key={img}
+          <Typography sx={{ my: 2 }}>{subtitle}</Typography>
+          <Typography>{description}</Typography>
+          <Chip
+            label={`IN STOCK: ${stock}`}
+            variant="filled"
+            sx={{ width: "fit-content", fontWeight: "bold", mt: 2 }}
+            color="warning"
           />
-        ))}
-      </Stack>
-    </Box>
+
+          <Box sx={{ my: 3 }}>
+            <Typography variant="h6">Quantity</Typography>
+            <QuantityInput onIncrement={(quantity) => setQuantity(quantity)} />
+          </Box>
+
+          <Button onClick={handleAddToCart} variant="contained">
+            Add to cart
+          </Button>
+          <Box>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography sx={{ mt: 3, mb: 2 }} variant="h5">
+                Reviews
+              </Typography>
+              <Stack direction="row" useFlexGap gap={1} alignItems="center">
+                {isReviewOpen && (
+                  <Button variant="outlined" onClick={handleSubmitReview}>
+                    Submit
+                  </Button>
+                )}
+                <Tooltip title={hasUser ? null : "Must be signed in"}>
+                  <Button
+                    onClick={handleReviewInit}
+                    disabled={!hasUser}
+                    variant="text"
+                    sx={{
+                      color: isReviewOpen ? "error.light" : "primary.light",
+                    }}
+                  >
+                    {isReviewOpen ? "Cancel" : "Add a review"}
+                  </Button>
+                </Tooltip>
+              </Stack>
+            </Stack>
+            {isReviewOpen && (
+              <Stack useFlexGap gap={1} sx={{ mb: 3, mt: 1 }}>
+                <TextField
+                  required
+                  inputRef={titleRef}
+                  placeholder="Title of your review"
+                />
+                <TextField
+                  required
+                  inputRef={commentRef}
+                  fullWidth
+                  placeholder="Comment your review here"
+                  multiline
+                  rows={5}
+                />
+              </Stack>
+            )}
+            {reviews.map((review: Review) => (
+              <Box key={review._id}>
+                <Stack
+                  alignItems="center"
+                  sx={{ mb: 2 }}
+                  useFlexGap
+                  flexDirection="row"
+                  gap={1}
+                >
+                  <Rating readOnly value={review.rating} />
+                  <Typography>{review.title}</Typography>
+                </Stack>
+                <Typography>{review.comment}</Typography>
+                <Typography variant="overline">
+                  by <strong>{review.name}</strong>
+                  {" - "}
+                  <Box component="span" sx={{ opacity: 0.8 }}>
+                    {new Date(review.createdAt).toLocaleDateString()}
+                  </Box>
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Stack>
+        {/*right hand side*/}
+        <Stack useFlexGap gap={2}>
+          {images.map((img) => (
+            <Box
+              maxWidth="600px"
+              component="img"
+              src={img}
+              alt={name}
+              key={img}
+            />
+          ))}
+        </Stack>
+      </Box>
+    </>
   );
 };
 
