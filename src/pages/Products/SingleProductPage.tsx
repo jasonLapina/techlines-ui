@@ -1,34 +1,18 @@
 import useProducts from "../../hooks/useProducts.ts";
 import { useParams } from "react-router";
 import Loading from "../../components/Loading.tsx";
-import {
-  Box,
-  Button,
-  Chip,
-  Rating,
-  Snackbar,
-  Stack,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { Product, Review, User } from "../../types.ts";
-import QuantityInput from "./Components/QuantityInput.tsx";
+import { Box, Stack } from "@mui/material";
+import { Product, User } from "../../types.ts";
 import { addToCart } from "../../redux/slices/cartSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { useMemo, useRef, useState } from "react";
 import { RootState } from "../../redux/store.ts";
 import { useMutation } from "@tanstack/react-query";
+import ProductDetails from "./Components/ProductDetails.tsx";
+import ProductImages from "./Components/ProductImages.tsx";
+import ReviewSection from "./Components/ReviewSection.tsx";
 
 const SingleProductPage = () => {
   const { productId } = useParams();
-
-  const [reviewSnack, setReviewSnack] = useState({ open: false, message: "" });
-
-  const [quantity, setQuantity] = useState(1);
-
-  const [isReviewOpen, setIsReviewOpen] = useState(false);
-
   const { data, isLoading, refetch } = useProducts<{ product: Product }>(
     productId,
   );
@@ -37,18 +21,13 @@ const SingleProductPage = () => {
     (state: RootState) => state.user.userInfo,
   ) as unknown as User;
 
-  const hasUser = useMemo(() => userInfo !== null, [userInfo]);
-
-  const titleRef = useRef<HTMLInputElement>(null);
-  const commentRef = useRef<HTMLInputElement>(null);
-
-  const addReviewFn = async () => {
+  const addReviewFn = async ({ title, comment, rating }: { title: string; comment: string; rating: number }) => {
     const payload = {
       userId: userInfo?._id,
       review: {
-        title: titleRef.current?.value,
-        comment: commentRef.current?.value,
-        rating: 5,
+        title,
+        comment,
+        rating,
       },
       productId: productId,
     };
@@ -61,172 +40,50 @@ const SingleProductPage = () => {
       credentials: "include",
     });
   };
+
   const { mutate } = useMutation({
     mutationFn: addReviewFn,
     onSuccess: () => {
       refetch();
-      setIsReviewOpen(false);
-      setReviewSnack({ open: true, message: "Review submitted" });
     },
   });
 
   if (isLoading) return <Loading />;
   if (!data) return <p>Product not found</p>;
 
-  const {
-    name,
-    images,
-    subtitle,
-    description,
-    rating,
-    numberOfReviews,
-    stock,
-    price,
-    reviews,
-  } = data.product;
-
-  const handleAddToCart = () => {
-    dispatch(addToCart({ product: data.product, quantity: quantity }));
+  const handleAddToCart = (quantity: number) => {
+    dispatch(addToCart({ product: data.product, quantity }));
   };
 
-  const handleReviewInit = () => {
-    setIsReviewOpen((prev) => !prev);
-  };
-
-  const handleSubmitReview = async () => {
-    if (!titleRef.current?.value || !commentRef.current?.value) {
-      return;
-    } else {
-      mutate();
-      setIsReviewOpen(false);
-      setReviewSnack({ open: true, message: "Review submitted" });
-    }
+  const handleSubmitReview = (title: string, comment: string, rating: number) => {
+    mutate({ title, comment, rating });
   };
 
   return (
-    <>
-      <Snackbar
-        open={reviewSnack.open}
-        autoHideDuration={6000}
-        message="Review submitted"
+    <Box
+      sx={{ display: "grid", alignItems: "start" }}
+      gridTemplateColumns="2fr 1fr"
+    >
+      {/* Left hand side */}
+      <Stack useFlexGap gap={1}>
+        <ProductDetails 
+          product={data.product} 
+          onAddToCart={handleAddToCart} 
+        />
+        <ReviewSection 
+          reviews={data.product.reviews} 
+          productId={productId} 
+          userInfo={userInfo} 
+          onSubmitReview={handleSubmitReview} 
+        />
+      </Stack>
+
+      {/* Right hand side */}
+      <ProductImages 
+        images={data.product.images} 
+        name={data.product.name} 
       />
-      <Box
-        sx={{ display: "grid", alignItems: "start" }}
-        gridTemplateColumns="2fr 1fr"
-      >
-        {/*left hand side*/}
-        <Stack useFlexGap gap={1}>
-          <Typography variant="h3">{name}</Typography>
-          <Typography color="info" variant="h5">
-            ${price}
-          </Typography>
-          <Stack alignItems="center" flexDirection="row" gap={1} useFlexGap>
-            <Rating value={rating} precision={0.5} readOnly />
-            <Typography sx={{ fontWeight: "bold" }}>
-              {numberOfReviews} Review{numberOfReviews > 1 ? "s" : ""}
-            </Typography>
-          </Stack>
-          <Typography sx={{ my: 2 }}>{subtitle}</Typography>
-          <Typography>{description}</Typography>
-          <Chip
-            label={`IN STOCK: ${stock}`}
-            variant="filled"
-            sx={{ width: "fit-content", fontWeight: "bold", mt: 2 }}
-            color="warning"
-          />
-
-          <Box sx={{ my: 3 }}>
-            <Typography variant="h6">Quantity</Typography>
-            <QuantityInput onIncrement={(quantity) => setQuantity(quantity)} />
-          </Box>
-
-          <Button onClick={handleAddToCart} variant="contained">
-            Add to cart
-          </Button>
-          <Box>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography sx={{ mt: 3, mb: 2 }} variant="h5">
-                Reviews
-              </Typography>
-              <Stack direction="row" useFlexGap gap={1} alignItems="center">
-                {isReviewOpen && (
-                  <Button variant="outlined" onClick={handleSubmitReview}>
-                    Submit
-                  </Button>
-                )}
-                <Tooltip title={hasUser ? null : "Must be signed in"}>
-                  <Button
-                    onClick={handleReviewInit}
-                    disabled={!hasUser}
-                    variant="text"
-                    sx={{
-                      color: isReviewOpen ? "error.light" : "primary.light",
-                    }}
-                  >
-                    {isReviewOpen ? "Cancel" : "Add a review"}
-                  </Button>
-                </Tooltip>
-              </Stack>
-            </Stack>
-            {isReviewOpen && (
-              <Stack useFlexGap gap={1} sx={{ mb: 3, mt: 1 }}>
-                <TextField
-                  required
-                  inputRef={titleRef}
-                  placeholder="Title of your review"
-                />
-                <TextField
-                  required
-                  inputRef={commentRef}
-                  fullWidth
-                  placeholder="Comment your review here"
-                  multiline
-                  rows={5}
-                />
-              </Stack>
-            )}
-            {reviews.map((review: Review) => (
-              <Box key={review._id}>
-                <Stack
-                  alignItems="center"
-                  sx={{ mb: 2 }}
-                  useFlexGap
-                  flexDirection="row"
-                  gap={1}
-                >
-                  <Rating readOnly value={review.rating} />
-                  <Typography>{review.title}</Typography>
-                </Stack>
-                <Typography>{review.comment}</Typography>
-                <Typography variant="overline">
-                  by <strong>{review.name}</strong>
-                  {" - "}
-                  <Box component="span" sx={{ opacity: 0.8 }}>
-                    {new Date(review.createdAt).toLocaleDateString()}
-                  </Box>
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-        </Stack>
-        {/*right hand side*/}
-        <Stack useFlexGap gap={2}>
-          {images.map((img) => (
-            <Box
-              maxWidth="600px"
-              component="img"
-              src={img}
-              alt={name}
-              key={img}
-            />
-          ))}
-        </Stack>
-      </Box>
-    </>
+    </Box>
   );
 };
 
