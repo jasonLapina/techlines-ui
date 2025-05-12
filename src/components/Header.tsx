@@ -46,8 +46,8 @@ const Header = () => {
               gap={2}
             >
               {pathname === "/products" && <ToggleFavorites />}
-              {userInfo && <ProfileDialog />}
               <CartDialog />
+              {userInfo && <ProfileDialog />}
             </Stack>
           </Box>
         </Toolbar>

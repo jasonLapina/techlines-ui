@@ -35,7 +35,7 @@ export default function ProfileDialog() {
               referrerPolicy: "no-referrer",
             },
           }}
-          sx={{ cursor: "pointer", width: 32, height: 32 }}
+          sx={{ cursor: "pointer", width: 40, height: 40, ml: 2 }}
           onClick={() => setOpen(true)}
           src={googleImage}
           alt={name}
@@ -52,12 +52,12 @@ export default function ProfileDialog() {
           <Stack
             useFlexGap
             gap={2}
-            sx={{ my: 5 }}
+            sx={{ mb: 5, mt: 2 }}
             alignContent="center"
-            alignItems="center"
+            alignItems="start"
           >
             <Avatar
-              sx={{ width: 56, height: 56 }}
+              sx={{ width: 120, height: 120, mb: 2, alignSelf: "center" }}
               onClick={() => setOpen(true)}
               src={googleImage}
               alt={name}
@@ -67,10 +67,10 @@ export default function ProfileDialog() {
                 },
               }}
             />
-            <Typography>
+            <Typography variant="h5">
               <strong>Name:</strong> {name}
             </Typography>
-            <Typography>
+            <Typography variant="h5">
               <strong>Email:</strong> {email}
             </Typography>
           </Stack>
