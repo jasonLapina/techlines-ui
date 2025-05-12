@@ -30,6 +30,11 @@ export default function ProfileDialog() {
     <>
       <Tooltip title="My account" arrow>
         <Avatar
+          slotProps={{
+            img: {
+              referrerPolicy: "no-referrer",
+            },
+          }}
           sx={{ cursor: "pointer", width: 32, height: 32 }}
           onClick={() => setOpen(true)}
           src={googleImage}
@@ -56,6 +61,11 @@ export default function ProfileDialog() {
               onClick={() => setOpen(true)}
               src={googleImage}
               alt={name}
+              slotProps={{
+                img: {
+                  referrerPolicy: "no-referrer",
+                },
+              }}
             />
             <Typography>
               <strong>Name:</strong> {name}
