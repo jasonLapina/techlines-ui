@@ -21,8 +21,7 @@ const HeroCta = () => {
           width: "fit-content",
           py: 1.5,
           px: 4,
-          backgroundColor: "white",
-          color: theme.palette.primary.main,
+
           fontWeight: "bold",
           borderRadius: "30px",
           boxShadow: "0 8px 20px rgba(0, 0, 0, 0.15)",
@@ -30,7 +29,6 @@ const HeroCta = () => {
           "&:hover": {
             transform: "translateY(-3px)",
             boxShadow: "0 12px 25px rgba(0, 0, 0, 0.2)",
-            backgroundColor: "white",
           },
           zIndex: 2,
         }}
