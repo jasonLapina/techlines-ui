@@ -58,7 +58,7 @@ const AddressSelector: React.FC<AddressSelectorProps> = ({
         Contact Information
       </Typography>
       <Typography>
-        <strong>Email:</strong> {userInfo.email}
+        <strong>Email:</strong> {userInfo?.email}
       </Typography>
       <Typography>
         <strong>Phone:</strong> {selectedAddress?.phoneNumber || "Not provided"}
