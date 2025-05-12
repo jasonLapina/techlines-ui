@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Box, Button, Snackbar, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { Review, User } from "../../../types";
 import ReviewForm from "./ReviewForm";
 import ReviewList from "./ReviewList";
+import { useSnackbar } from "notistack";
 
 interface ReviewSectionProps {
   reviews: Review[];
@@ -18,13 +19,14 @@ const ReviewSection = ({
   onSubmitReview,
 }: ReviewSectionProps) => {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [reviewSnack, setReviewSnack] = useState({ open: false, message: "" });
 
   const hasUser = userInfo !== null;
 
   const handleReviewInit = () => {
     setIsReviewOpen((prev) => !prev);
   };
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmitReview = (
     title: string,
@@ -33,7 +35,7 @@ const ReviewSection = ({
   ) => {
     onSubmitReview(title, comment, rating);
     setIsReviewOpen(false);
-    setReviewSnack({ open: true, message: "Review submitted" });
+    enqueueSnackbar("Review added successfully", { variant: "success" });
   };
 
   const handleCancelReview = () => {
@@ -42,12 +44,6 @@ const ReviewSection = ({
 
   return (
     <Box>
-      <Snackbar
-        open={reviewSnack.open}
-        autoHideDuration={6000}
-        message={reviewSnack.message}
-        onClose={() => setReviewSnack({ ...reviewSnack, open: false })}
-      />
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography sx={{ mt: 3, mb: 2 }} variant="h5">
           Reviews

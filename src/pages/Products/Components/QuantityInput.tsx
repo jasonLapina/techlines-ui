@@ -8,6 +8,7 @@ import {
   removeProductFromCart,
 } from "../../../redux/slices/cartSlice.ts";
 import { Product } from "../../../types.ts";
+import { useSnackbar } from "notistack";
 
 interface QuantityInputProps {
   initValue?: number;
@@ -26,12 +27,14 @@ const QuantityInput = ({
 }: QuantityInputProps) => {
   const [quantity, setQuantity] = useState(initValue ?? 1);
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleIncrement = () => {
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     if (canAdd) {
       dispatch(addToCart({ product }));
+      enqueueSnackbar("Product added to cart", { variant: "success" });
     } else if (onIncrement) {
       onIncrement(newQuantity);
     }

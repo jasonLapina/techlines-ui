@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import ProductDetails from "./Components/ProductDetails.tsx";
 import ProductImages from "./Components/ProductImages.tsx";
 import ReviewSection from "./Components/ReviewSection.tsx";
+import { useSnackbar } from "notistack";
 
 const SingleProductPage = () => {
   const { productId } = useParams();
@@ -21,7 +22,15 @@ const SingleProductPage = () => {
     (state: RootState) => state.user.userInfo,
   ) as unknown as User;
 
-  const addReviewFn = async ({ title, comment, rating }: { title: string; comment: string; rating: number }) => {
+  const addReviewFn = async ({
+    title,
+    comment,
+    rating,
+  }: {
+    title: string;
+    comment: string;
+    rating: number;
+  }) => {
     const payload = {
       userId: userInfo?._id,
       review: {
@@ -47,15 +56,21 @@ const SingleProductPage = () => {
       refetch();
     },
   });
+  const { enqueueSnackbar } = useSnackbar();
 
   if (isLoading) return <Loading />;
   if (!data) return <p>Product not found</p>;
 
   const handleAddToCart = (quantity: number) => {
     dispatch(addToCart({ product: data.product, quantity }));
+    enqueueSnackbar("Product added to cart", { variant: "success" });
   };
 
-  const handleSubmitReview = (title: string, comment: string, rating: number) => {
+  const handleSubmitReview = (
+    title: string,
+    comment: string,
+    rating: number,
+  ) => {
     mutate({ title, comment, rating });
   };
 
@@ -66,23 +81,17 @@ const SingleProductPage = () => {
     >
       {/* Left hand side */}
       <Stack useFlexGap gap={1}>
-        <ProductDetails 
-          product={data.product} 
-          onAddToCart={handleAddToCart} 
-        />
-        <ReviewSection 
-          reviews={data.product.reviews} 
-          productId={productId} 
-          userInfo={userInfo} 
-          onSubmitReview={handleSubmitReview} 
+        <ProductDetails product={data.product} onAddToCart={handleAddToCart} />
+        <ReviewSection
+          reviews={data.product.reviews}
+          productId={productId}
+          userInfo={userInfo}
+          onSubmitReview={handleSubmitReview}
         />
       </Stack>
 
       {/* Right hand side */}
-      <ProductImages 
-        images={data.product.images} 
-        name={data.product.name} 
-      />
+      <ProductImages images={data.product.images} name={data.product.name} />
     </Box>
   );
 };

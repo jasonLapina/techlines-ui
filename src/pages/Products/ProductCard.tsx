@@ -22,6 +22,7 @@ import { useNavigate } from "react-router";
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { addToCart } from "../../redux/slices/cartSlice.ts";
+import { useSnackbar } from "notistack";
 
 interface ProductCardProps {
   product: Product;
@@ -81,8 +82,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
     }
   };
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleAddToCart = () => {
     dispatch(addToCart({ product }));
+    enqueueSnackbar("Product added to cart", { variant: "success" });
   };
 
   const trimmedSubtitle =

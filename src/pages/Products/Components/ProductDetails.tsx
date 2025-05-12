@@ -10,7 +10,8 @@ interface ProductDetailsProps {
 
 const ProductDetails = ({ product, onAddToCart }: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState(1);
-  const { name, subtitle, description, rating, numberOfReviews, stock, price } = product;
+  const { name, subtitle, description, rating, numberOfReviews, stock, price } =
+    product;
 
   const handleAddToCart = () => {
     onAddToCart(quantity);
