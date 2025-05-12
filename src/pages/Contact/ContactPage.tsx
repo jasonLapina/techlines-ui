@@ -113,7 +113,6 @@ const ContactPage: React.FC = () => {
         sx={{
           textAlign: "center",
           mb: 6,
-          pt: 4,
         }}
       >
         <Typography
@@ -185,7 +184,7 @@ const ContactPage: React.FC = () => {
                   <Typography variant="body2">
                     123 Tech Street, Suite 456
                     <br />
-                    San Francisco, CA 94107
+                    Taguig, Metro Manila
                   </Typography>
                 </Box>
               </Box>
@@ -237,17 +236,6 @@ const ContactPage: React.FC = () => {
                 </Box>
               </Box>
             </Paper>
-
-            <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
-              Business Hours
-            </Typography>
-            <Typography variant="body2">
-              Monday - Friday: 9:00 AM - 6:00 PM PST
-              <br />
-              Saturday: 10:00 AM - 4:00 PM PST
-              <br />
-              Sunday: Closed
-            </Typography>
           </Box>
         </Grid>
 
@@ -264,6 +252,7 @@ const ContactPage: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             elevation={3}
             sx={{
+              height: "100%",
               p: 4,
               borderRadius: 2,
               background: `linear-gradient(135deg, ${theme.palette.background.paper}, ${theme.palette.grey[50]})`,
