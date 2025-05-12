@@ -10,6 +10,7 @@ const Link = ({ to, children }: LinkProps) => {
       style={({ isActive }) => ({
         color: isActive ? "black" : "inherit",
         textDecoration: "none",
+        fontWeight: isActive ? "bold" : "normal",
       })}
       to={to}
     >
