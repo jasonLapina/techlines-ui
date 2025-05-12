@@ -9,20 +9,32 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import AddressForm from "../../components/AddressForm";
 import AddressSelector from "../../components/AddressSelector";
 import { Address } from "../../redux/slices/addressSlice";
+import { OrderReview, PaymentForm } from "./Components";
+import { PaymentDetails } from "./Components/PaymentForm";
+import { clearCart } from "../../redux/slices/cartSlice";
 
 const steps = ["Shipping Information", "Payment Details", "Review Order"];
 
 const CheckoutPage = () => {
+  const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(0);
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [addressToEdit, setAddressToEdit] = useState<Address | undefined>(
     undefined,
   );
+  const [paymentDetails, setPaymentDetails] = useState<PaymentDetails>({
+    cardName: "",
+    cardNumber: "",
+    expiryDate: "",
+    cvv: "",
+  });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setOrderPlaced] = useState(false);
 
   const { addresses } = useSelector((state: RootState) => state.address);
   const cart = useSelector((state: RootState) => state.cart);
@@ -55,6 +67,18 @@ const CheckoutPage = () => {
     setAddressToEdit(undefined);
   };
 
+  const handlePaymentSubmit = (details: PaymentDetails) => {
+    setPaymentDetails(details);
+    handleNext();
+  };
+
+  const handlePlaceOrder = () => {
+    // In a real application, you would send the order to the server here
+    setOrderPlaced(true);
+    dispatch(clearCart());
+    handleNext();
+  };
+
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -70,18 +94,10 @@ const CheckoutPage = () => {
             onEdit={handleEditAddress}
           />
         );
+      case 3:
+        return <PaymentForm onSubmit={handlePaymentSubmit} />;
       case 1:
-        return (
-          <Typography variant="h6">
-            Payment details will be implemented in a future update.
-          </Typography>
-        );
-      case 2:
-        return (
-          <Typography variant="h6">
-            Order review will be implemented in a future update.
-          </Typography>
-        );
+        return <OrderReview paymentDetails={paymentDetails} />;
       default:
         throw new Error("Unknown step");
     }
@@ -124,13 +140,13 @@ const CheckoutPage = () => {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
+                Your order number is #{Math.floor(Math.random() * 10000000)}. We
+                have emailed your order confirmation, and will send you an
+                update when your order has shipped.
               </Typography>
               <Button
                 variant="contained"
-                onClick={() => setActiveStep(0)}
+                onClick={() => (window.location.href = "/")}
                 sx={{ mt: 3, ml: 1 }}
               >
                 Back to Home
@@ -148,7 +164,23 @@ const CheckoutPage = () => {
                 {!showAddressForm && (
                   <Button
                     variant="contained"
-                    onClick={handleNext}
+                    onClick={() => {
+                      if (activeStep === steps.length - 1) {
+                        handlePlaceOrder();
+                      } else if (activeStep === 1) {
+                        // For payment step, trigger form validation
+                        const paymentForm = document.querySelector("form");
+                        if (paymentForm) {
+                          const submitEvent = new Event("submit", {
+                            cancelable: true,
+                          });
+                          paymentForm.dispatchEvent(submitEvent);
+                          // handleNext will be called by the form's onSubmit handler if validation passes
+                        }
+                      } else {
+                        handleNext();
+                      }
+                    }}
                     disabled={
                       activeStep === 0 &&
                       !showAddressForm &&
