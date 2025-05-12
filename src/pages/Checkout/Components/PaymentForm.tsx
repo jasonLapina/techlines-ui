@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useImperativeHandle, forwardRef } from "react";
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import { CreditCard } from "@mui/icons-material";
 
 interface PaymentFormProps {
   onSubmit: (paymentDetails: PaymentDetails) => void;
+}
+
+export interface PaymentFormRef {
+  submitForm: () => void;
 }
 
 export interface PaymentDetails {
@@ -13,7 +17,7 @@ export interface PaymentDetails {
   cvv: string;
 }
 
-const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit }) => {
+const PaymentForm = forwardRef<PaymentFormRef, PaymentFormProps>(({ onSubmit }, ref) => {
   const [paymentDetails, setPaymentDetails] = useState<PaymentDetails>({
     cardName: "",
     cardNumber: "",
@@ -22,6 +26,14 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit }) => {
   });
 
   const [errors, setErrors] = useState<Partial<PaymentDetails>>({});
+  
+  useImperativeHandle(ref, () => ({
+    submitForm: () => {
+      if (validateForm()) {
+        onSubmit(paymentDetails);
+      }
+    }
+  }));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -178,6 +190,6 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ onSubmit }) => {
       <input type="submit" style={{ display: "none" }} />
     </Box>
   );
-};
+});
 
 export default PaymentForm;

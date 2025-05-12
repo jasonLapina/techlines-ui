@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Box,
   Button,
@@ -15,7 +15,7 @@ import AddressForm from "../../components/AddressForm";
 import AddressSelector from "../../components/AddressSelector";
 import { Address } from "../../redux/slices/addressSlice";
 import { OrderReview, PaymentForm } from "./Components";
-import { PaymentDetails } from "./Components/PaymentForm";
+import { PaymentDetails, PaymentFormRef } from "./Components/PaymentForm";
 import { clearCart } from "../../redux/slices/cartSlice";
 
 const steps = ["Shipping Information", "Payment Details", "Review Order"];
@@ -35,6 +35,8 @@ const CheckoutPage = () => {
   });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setOrderPlaced] = useState(false);
+
+  const paymentFormRef = useRef<PaymentFormRef>(null);
 
   const { addresses } = useSelector((state: RootState) => state.address);
   const cart = useSelector((state: RootState) => state.cart);
@@ -95,7 +97,7 @@ const CheckoutPage = () => {
           />
         );
       case 1:
-        return <PaymentForm onSubmit={handlePaymentSubmit} />;
+        return <PaymentForm ref={paymentFormRef} onSubmit={handlePaymentSubmit} />;
       case 2:
         return <OrderReview paymentDetails={paymentDetails} />;
       default:
@@ -168,13 +170,9 @@ const CheckoutPage = () => {
                       if (activeStep === steps.length - 1) {
                         handlePlaceOrder();
                       } else if (activeStep === 1) {
-                        // For payment step, trigger form validation
-                        const paymentForm = document.querySelector("form");
-                        if (paymentForm) {
-                          const submitEvent = new Event("submit", {
-                            cancelable: true,
-                          });
-                          paymentForm.dispatchEvent(submitEvent);
+                        // For payment step, trigger form validation using the ref
+                        if (paymentFormRef.current) {
+                          paymentFormRef.current.submitForm();
                           // handleNext will be called by the form's onSubmit handler if validation passes
                         }
                       } else {
