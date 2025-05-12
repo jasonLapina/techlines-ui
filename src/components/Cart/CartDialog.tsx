@@ -37,7 +37,7 @@ const CartDialog = () => {
       <CartIcon onClick={() => setOpen(true)} />
       <Dialog
         fullWidth
-        maxWidth={hasItems ? "xl" : "sm"}
+        maxWidth={hasItems ? "lg" : "sm"}
         open={open}
         onClose={() => setOpen(false)}
       >
@@ -92,11 +92,11 @@ const CartDialogContent = ({
   return (
     <Box
       display="grid"
-      gridTemplateColumns="1fr .8fr"
+      gridTemplateColumns="1fr 1fr"
       alignItems="start"
       justifyContent="center"
       justifyItems="center"
-      columnGap={2}
+      columnGap={1}
       py={5}
     >
       <Stack
