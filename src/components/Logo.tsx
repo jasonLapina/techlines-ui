@@ -9,9 +9,11 @@ interface LogoProps {
 const Logo = ({ color = "inherit" }: LogoProps) => {
   return (
     <Box component={Link} to="/" sx={{ textDecoration: "none", color }}>
-      <Stack flexDirection="row" alignItems="center" useFlexGap gap={1}>
+      <Stack flexDirection="row" alignItems="center" useFlexGap>
         <DeveloperMode sx={{ color: "inherit" }} />
-        <Typography variant="h6" color="inherit">TechLines</Typography>
+        <Typography variant="h6" color="inherit">
+          TechLines
+        </Typography>
       </Stack>
     </Box>
   );

@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Container, Stack, Toolbar } from "@mui/material";
+import { AppBar, Box, Container, Stack, Toolbar } from "@mui/material";
 import ToggleFavorites from "./ToggleFavorites.tsx";
 import Logo from "./Logo.tsx";
 import Link from "./Link.tsx";
@@ -21,26 +21,35 @@ const Header = () => {
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ height: "80px" }}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            width="100%"
+        <Toolbar>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1.5fr 1fr",
+              width: "100%",
+              alignItems: "center",
+            }}
           >
-            <Stack direction="row" spacing={4} alignItems="center">
+            <Box sx={{ justifySelf: "start" }}>
               <Logo color="white" />
-              <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <NavLinks />
-              </Box>
-            </Stack>
-
-            <Stack direction="row" alignItems="center" useFlexGap gap={4}>
+            </Box>
+            <Box sx={{ justifySelf: "center" }}>
+              <NavLinks />
+            </Box>
+            <Stack
+              sx={{
+                justifySelf: "end",
+              }}
+              direction="row"
+              alignItems="center"
+              useFlexGap
+              gap={2}
+            >
               {pathname === "/products" && <ToggleFavorites />}
               {userInfo && <ProfileDialog />}
               <CartDialog />
             </Stack>
-          </Stack>
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
@@ -48,22 +57,28 @@ const Header = () => {
 };
 
 const NavLinks = () => {
+  const links = [
+    {
+      text: "Products",
+      path: "/products",
+    },
+    {
+      text: "About",
+      path: "/about",
+    },
+    {
+      text: "Contact",
+      path: "/contact",
+    },
+  ];
+
   return (
-    <Stack direction="row" spacing={2}>
-      <Button
-        component={Link}
-        to="/products"
-        variant="text"
-        sx={{
-          color: "white",
-          fontWeight: 500,
-          "&:hover": {
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
-          },
-        }}
-      >
-        Products
-      </Button>
+    <Stack direction="row" spacing={5}>
+      {links.map((link) => (
+        <Link key={link.text} to={link.path}>
+          {link.text}
+        </Link>
+      ))}
     </Stack>
   );
 };
