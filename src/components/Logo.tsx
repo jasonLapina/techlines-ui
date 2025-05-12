@@ -1,14 +1,16 @@
 import { DeveloperMode } from "@mui/icons-material";
 import { Box, Stack, Typography } from "@mui/material";
-import Link from "./Link.tsx";
+import { useNavigate } from "react-router";
 
-interface LogoProps {
-  color?: string;
-}
-
-const Logo = ({ color = "inherit" }: LogoProps) => {
+const Logo = () => {
+  const navigate = useNavigate();
   return (
-    <Box component={Link} to="/" sx={{ textDecoration: "none", color }}>
+    <Box
+      sx={{
+        cursor: "pointer",
+      }}
+      onClick={() => navigate("/")}
+    >
       <Stack flexDirection="row" alignItems="center" useFlexGap>
         <DeveloperMode sx={{ color: "inherit" }} />
         <Typography variant="h6" color="inherit">

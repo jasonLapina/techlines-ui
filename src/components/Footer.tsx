@@ -19,7 +19,7 @@ const Footer = () => {
           <Box>
             <Stack spacing={2}>
               <Box sx={{ mb: 2 }}>
-                <Logo color="white" />
+                <Logo />
               </Box>
               <Typography variant="body2">
                 Your one-stop shop for the latest tech products and accessories.

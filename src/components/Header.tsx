@@ -31,7 +31,7 @@ const Header = () => {
             }}
           >
             <Box sx={{ justifySelf: "start" }}>
-              <Logo color="white" />
+              <Logo />
             </Box>
             <Box sx={{ justifySelf: "center" }}>
               <NavLinks />

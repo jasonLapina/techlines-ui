@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router";
+import { NavLink as RouterLink } from "react-router";
 
 interface LinkProps {
   to: string;
@@ -6,7 +6,13 @@ interface LinkProps {
 }
 const Link = ({ to, children }: LinkProps) => {
   return (
-    <RouterLink style={{ color: "inherit", textDecoration: "none" }} to={to}>
+    <RouterLink
+      style={({ isActive }) => ({
+        color: isActive ? "black" : "inherit",
+        textDecoration: "none",
+      })}
+      to={to}
+    >
       {children}
     </RouterLink>
   );
