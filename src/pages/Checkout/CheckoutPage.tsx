@@ -94,9 +94,9 @@ const CheckoutPage = () => {
             onEdit={handleEditAddress}
           />
         );
-      case 3:
-        return <PaymentForm onSubmit={handlePaymentSubmit} />;
       case 1:
+        return <PaymentForm onSubmit={handlePaymentSubmit} />;
+      case 2:
         return <OrderReview paymentDetails={paymentDetails} />;
       default:
         throw new Error("Unknown step");
