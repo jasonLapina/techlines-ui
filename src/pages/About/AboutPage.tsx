@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { motion } from "motion/react";
 import { Business, Group, History, Lightbulb } from "@mui/icons-material";
+import GlobalHeading from "../../components/GlobalHeading.tsx";
 
 const AboutPage: React.FC = () => {
   const theme = useTheme();
@@ -30,20 +31,7 @@ const AboutPage: React.FC = () => {
           pt: 4,
         }}
       >
-        <Typography
-          variant="h2"
-          component="h1"
-          fontWeight="bold"
-          gutterBottom
-          sx={{
-            background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            mb: 2,
-          }}
-        >
-          About TechLines
-        </Typography>
+        <GlobalHeading>About TechLines</GlobalHeading>
         <Typography
           variant="h6"
           color="text.secondary"

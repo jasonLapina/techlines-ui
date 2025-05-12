@@ -32,7 +32,8 @@ const ProductsPage = () => {
           gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
           columnGap: 2,
           rowGap: 4,
-          my: 10,
+          mb: 10,
+          mt: 5,
           mx: 2,
         }}
       >
