@@ -18,6 +18,8 @@ import Landing from "./pages/Landing/Landing.tsx";
 import ProductsPage from "./pages/Products/ProductsPage.tsx";
 import theme from "./theme.ts";
 import CheckoutPage from "./pages/Checkout/CheckoutPage.tsx";
+import AboutPage from "./pages/About/AboutPage.tsx";
+import ContactPage from "./pages/Contact/ContactPage.tsx";
 import { SnackbarProvider } from "notistack";
 
 const client = new QueryClient();
@@ -54,6 +56,8 @@ createRoot(document.getElementById("root")!).render(
                     element={<SingleProductPage />}
                   />
                   <Route path="/checkout" element={<CheckoutPage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
                 </Route>
               </Routes>
             </Wrapper>

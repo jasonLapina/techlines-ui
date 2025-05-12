@@ -32,12 +32,24 @@ const Landing = () => {
       {/* Hero Section */}
       <Box
         sx={{
-          background: `linear-gradient(to right, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
+          background: `linear-gradient(135deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
           color: "white",
           py: { xs: 8, md: 12 },
           mb: 8,
           borderRadius: "20px",
-          boxShadow: 3,
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.15)",
+          position: "relative",
+          overflow: "hidden",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "radial-gradient(circle at top right, rgba(255,255,255,0.2) 0%, transparent 70%)",
+            zIndex: 1,
+          },
         }}
       >
         <Container maxWidth="lg">
@@ -91,13 +103,24 @@ const Landing = () => {
               />
               <Stack useFlexGap direction="row" gap={2}>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   size="large"
                   sx={{
                     width: "fit-content",
                     py: 1.5,
                     px: 4,
                     backgroundColor: "white",
+                    color: theme.palette.primary.main,
+                    fontWeight: "bold",
+                    borderRadius: "30px",
+                    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.15)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-3px)",
+                      boxShadow: "0 12px 25px rgba(0, 0, 0, 0.2)",
+                      backgroundColor: "white",
+                    },
+                    zIndex: 2,
                   }}
                   endIcon={<Shop />}
                   onClick={() => navigate("/products")}
@@ -117,7 +140,17 @@ const Landing = () => {
                       py: 1.5,
                       px: 4,
                       color: "white",
-                      backgroundColor: "info.main",
+                      background: `linear-gradient(45deg, ${theme.palette.info.main}, ${theme.palette.info.dark})`,
+                      fontWeight: "bold",
+                      borderRadius: "30px",
+                      boxShadow: "0 8px 20px rgba(0, 0, 0, 0.15)",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-3px)",
+                        boxShadow: "0 12px 25px rgba(0, 0, 0, 0.2)",
+                        background: `linear-gradient(45deg, ${theme.palette.info.dark}, ${theme.palette.info.main})`,
+                      },
+                      zIndex: 2,
                     }}
                   >
                     Sign in with Google
@@ -175,11 +208,24 @@ const Landing = () => {
                     alignItems: "center",
                     textAlign: "center",
                     borderRadius: 2,
+                    background: `linear-gradient(135deg, ${theme.palette.background.paper}, ${theme.palette.grey[50]})`,
                     transition:
                       "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
                     "&:hover": {
                       transform: "translateY(-5px)",
-                      boxShadow: 6,
+                      boxShadow: "0 12px 20px rgba(0, 0, 0, 0.1)",
+                      background: `linear-gradient(135deg, ${theme.palette.grey[50]}, ${theme.palette.background.paper})`,
+                    },
+                    position: "relative",
+                    overflow: "hidden",
+                    "&::after": {
+                      content: '""',
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "4px",
+                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                     },
                   }}
                 >
@@ -209,9 +255,24 @@ const Landing = () => {
             sx={{
               p: { xs: 4, md: 6 },
               borderRadius: 4,
-              background: `linear-gradient(135deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`,
+              background: `linear-gradient(135deg, ${theme.palette.primary.light}, ${theme.palette.primary.main}, ${theme.palette.secondary.dark})`,
               color: "white",
               textAlign: "center",
+              position: "relative",
+              overflow: "hidden",
+              boxShadow: "0 15px 35px rgba(0, 0, 0, 0.2)",
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: "url('/images/pattern.png')",
+                backgroundSize: "cover",
+                opacity: 0.05,
+                zIndex: 0,
+              },
             }}
           >
             <Typography
@@ -230,21 +291,30 @@ const Landing = () => {
               accessories. Find exactly what you need at competitive prices.
             </Typography>
 
-            <Button
-              variant="outlined"
-              size="large"
-              sx={{
-                py: 1.5,
-                px: 4,
-                backgroundColor: "secondary.main",
-                "&:hover": {
-                  backgroundColor: "secondary.dark",
-                },
-              }}
-              onClick={() => navigate("/products")}
-            >
-              Shop All Products
-            </Button>
+            <Box sx={{ position: "relative", zIndex: 1 }}>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{
+                  py: 1.5,
+                  px: 4,
+                  background: `linear-gradient(45deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.light})`,
+                  color: "white",
+                  fontWeight: "bold",
+                  borderRadius: "30px",
+                  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.15)",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-3px)",
+                    boxShadow: "0 12px 25px rgba(0, 0, 0, 0.2)",
+                    background: `linear-gradient(45deg, ${theme.palette.secondary.light}, ${theme.palette.secondary.main})`,
+                  },
+                }}
+                onClick={() => navigate("/products")}
+              >
+                Shop All Products
+              </Button>
+            </Box>
           </Paper>
         </motion.div>
       </Container>
