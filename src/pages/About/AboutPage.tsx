@@ -24,7 +24,6 @@ const AboutPage: React.FC = () => {
         component={motion.div}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
         sx={{
           textAlign: "center",
           mb: 6,
@@ -97,13 +96,12 @@ const AboutPage: React.FC = () => {
               description:
                 "We stand behind our products and services, ensuring consistent quality and dependability.",
             },
-          ].map((value, index) => (
+          ].map((value) => (
             <Grid size={{ xs: 12, md: 6, sm: 3 }} key={value.title}>
               <Paper
                 component={motion.div}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.5 }}
                 elevation={2}
                 sx={{
                   p: 3,
@@ -176,13 +174,12 @@ const AboutPage: React.FC = () => {
               image: "https://randomuser.me/api/portraits/women/68.jpg",
               bio: "Sarah ensures that every customer interaction with TechLines exceeds expectations.",
             },
-          ].map((member, index) => (
+          ].map((member) => (
             <Grid size={{ xs: 12, md: 4 }} key={member.name}>
               <Paper
                 component={motion.div}
                 initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.8 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 elevation={2}
                 sx={{
                   p: 3,
@@ -220,8 +217,7 @@ const AboutPage: React.FC = () => {
       <Box
         component={motion.div}
         initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1 }}
+        whileInView={{ opacity: 1, y: 0 }}
         sx={{ mb: 6 }}
       >
         <Paper

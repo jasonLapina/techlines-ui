@@ -41,12 +41,12 @@ const Features = () => {
             title: "24/7 Support",
             description: "Our support team is always available",
           },
-        ].map((feature, index) => (
+        ].map((feature) => (
           <Box key={feature.title}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
               <Paper
                 elevation={2}

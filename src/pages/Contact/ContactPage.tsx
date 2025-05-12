@@ -110,7 +110,6 @@ const ContactPage: React.FC = () => {
         component={motion.div}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
         sx={{
           textAlign: "center",
           mb: 6,
@@ -153,7 +152,6 @@ const ContactPage: React.FC = () => {
             component={motion.div}
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Typography
               variant="h4"
@@ -264,7 +262,6 @@ const ContactPage: React.FC = () => {
             component={motion.div}
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
             elevation={3}
             sx={{
               p: 4,
@@ -394,7 +391,6 @@ const ContactPage: React.FC = () => {
         component={motion.div}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
         sx={{ mb: 8 }}
       >
         <Typography
