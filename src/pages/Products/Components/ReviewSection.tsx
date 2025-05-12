@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  Snackbar,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Snackbar, Stack, Typography } from "@mui/material";
 import { Review, User } from "../../../types";
 import ReviewForm from "./ReviewForm";
 import ReviewList from "./ReviewList";
@@ -59,18 +52,19 @@ const ReviewSection = ({
         <Typography sx={{ mt: 3, mb: 2 }} variant="h5">
           Reviews
         </Typography>
-        <Tooltip title={hasUser ? null : "Must be signed in"}>
-          <Button
-            onClick={handleReviewInit}
-            disabled={!hasUser}
-            variant="text"
-            sx={{
-              color: isReviewOpen ? "error.light" : "primary.light",
-            }}
-          >
-            {isReviewOpen ? "Cancel" : "Add a review"}
-          </Button>
-        </Tooltip>
+
+        <Button
+          onClick={handleReviewInit}
+          disabled={!hasUser}
+          variant="text"
+          sx={{
+            color: isReviewOpen ? "error.light" : "primary.light",
+          }}
+        >
+          {isReviewOpen
+            ? "Cancel"
+            : `${hasUser ? "A" : "Sign in to a"}dd a review`}
+        </Button>
       </Stack>
 
       {isReviewOpen && (
