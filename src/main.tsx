@@ -18,6 +18,7 @@ import Landing from "./pages/Landing/Landing.tsx";
 import ProductsPage from "./pages/Products/ProductsPage.tsx";
 import theme from "./theme.ts";
 import CheckoutPage from "./pages/Checkout/CheckoutPage.tsx";
+import { SnackbarProvider } from "notistack";
 
 const client = new QueryClient();
 
@@ -36,26 +37,28 @@ createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={client}>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Wrapper>
-            <CssBaseline />
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Landing />} />
-                <Route path="products" element={<ProductsPage />} />
-                <Route
-                  path="/products/:productId"
-                  element={<SingleProductPage />}
-                />
-                <Route
-                  path="/products/:productId"
-                  element={<SingleProductPage />}
-                />
-                <Route path="/checkout" element={<CheckoutPage />} />
-              </Route>
-            </Routes>
-          </Wrapper>
-        </BrowserRouter>
+        <SnackbarProvider>
+          <BrowserRouter>
+            <Wrapper>
+              <CssBaseline />
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Landing />} />
+                  <Route path="products" element={<ProductsPage />} />
+                  <Route
+                    path="/products/:productId"
+                    element={<SingleProductPage />}
+                  />
+                  <Route
+                    path="/products/:productId"
+                    element={<SingleProductPage />}
+                  />
+                  <Route path="/checkout" element={<CheckoutPage />} />
+                </Route>
+              </Routes>
+            </Wrapper>
+          </BrowserRouter>
+        </SnackbarProvider>
       </ThemeProvider>
     </Provider>
   </QueryClientProvider>,
