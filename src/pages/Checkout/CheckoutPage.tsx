@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -17,6 +17,7 @@ import { Address } from "../../redux/slices/addressSlice";
 import { OrderReview, PaymentForm } from "./Components";
 import { PaymentDetails, PaymentFormRef } from "./Components/PaymentForm";
 import { clearCart } from "../../redux/slices/cartSlice";
+import { CartItem } from "../../types.ts";
 
 const steps = ["Shipping Information", "Payment Details", "Review Order"];
 
@@ -38,7 +39,9 @@ const CheckoutPage = () => {
 
   const paymentFormRef = useRef<PaymentFormRef>(null);
 
-  const { addresses } = useSelector((state: RootState) => state.address);
+  const { addresses, selectedAddressId } = useSelector(
+    (state: RootState) => state.address,
+  );
   const cart = useSelector((state: RootState) => state.cart);
 
   const handleNext = () => {
@@ -75,6 +78,36 @@ const CheckoutPage = () => {
   };
 
   const handlePlaceOrder = () => {
+    // Get the selected address
+    const selectedAddress = addresses.find(
+      (addr: Address) => addr.id === selectedAddressId,
+    );
+
+    // Calculate order total (subtotal + shipping)
+    const subtotal = cart.items.reduce(
+      (total: number, item: CartItem) =>
+        total + item.product.price * item.quantity,
+      0,
+    );
+    const shippingCost = 5;
+    const orderTotal = subtotal + shippingCost;
+
+    // Log order information to the console
+    console.log("Order Submitted:");
+    console.log("Shipping Address:", selectedAddress);
+    console.log(
+      "Contact Info:",
+      selectedAddress
+        ? {
+            name: selectedAddress.alias,
+            phone: selectedAddress.phoneNumber,
+          }
+        : "No address selected",
+    );
+    console.log("Payment Details:", paymentDetails);
+    console.log("Order Items:", cart.items);
+    console.log("Order Total:", orderTotal.toFixed(2));
+
     // In a real application, you would send the order to the server here
     setOrderPlaced(true);
     dispatch(clearCart());
@@ -97,7 +130,9 @@ const CheckoutPage = () => {
           />
         );
       case 1:
-        return <PaymentForm ref={paymentFormRef} onSubmit={handlePaymentSubmit} />;
+        return (
+          <PaymentForm ref={paymentFormRef} onSubmit={handlePaymentSubmit} />
+        );
       case 2:
         return <OrderReview paymentDetails={paymentDetails} />;
       default:
