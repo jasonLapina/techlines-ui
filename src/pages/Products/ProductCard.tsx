@@ -89,11 +89,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
     enqueueSnackbar("Product added to cart", { variant: "success" });
   };
 
-  const trimmedSubtitle =
-    product.subtitle.length > 50
-      ? `${product.subtitle.slice(0, 47)}...`
-      : product.subtitle;
-
   return (
     <Card sx={{ maxWidth: 400 }}>
       <CardActionArea
@@ -140,7 +135,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <Typography sx={{ my: 3 }} variant="h6">
             {product.name}
           </Typography>
-          <Typography variant="body2">{trimmedSubtitle}</Typography>
+          <Typography
+            sx={{
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+            }}
+            variant="body2"
+          >
+            {product.subtitle}
+          </Typography>
           <Typography sx={{ mt: 2 }} color="info" variant="h6">
             ${product.price}
           </Typography>
