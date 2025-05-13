@@ -10,7 +10,6 @@ const Features = () => {
     <Container maxWidth="lg" sx={{ mb: 10 }}>
       <Typography
         variant="h4"
-        component="h2"
         textAlign="center"
         fontWeight="bold"
         sx={{ mb: 6 }}

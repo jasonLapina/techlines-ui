@@ -152,12 +152,7 @@ const ContactPage: React.FC = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
           >
-            <Typography
-              variant="h4"
-              component="h2"
-              fontWeight="bold"
-              gutterBottom
-            >
+            <Typography variant="h4" fontWeight="bold" gutterBottom>
               Get In Touch
             </Typography>
             <Typography variant="body1" paragraph sx={{ mb: 4 }}>
@@ -258,12 +253,7 @@ const ContactPage: React.FC = () => {
               background: `linear-gradient(135deg, ${theme.palette.background.paper}, ${theme.palette.grey[50]})`,
             }}
           >
-            <Typography
-              variant="h4"
-              component="h2"
-              fontWeight="bold"
-              gutterBottom
-            >
+            <Typography variant="h4" fontWeight="bold" gutterBottom>
               Send Us a Message
             </Typography>
             <Typography variant="body1" paragraph sx={{ mb: 4 }}>
@@ -384,7 +374,6 @@ const ContactPage: React.FC = () => {
       >
         <Typography
           variant="h4"
-          component="h2"
           fontWeight="bold"
           gutterBottom
           textAlign="center"

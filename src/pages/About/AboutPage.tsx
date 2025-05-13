@@ -62,7 +62,6 @@ const AboutPage: React.FC = () => {
       <Box sx={{ mb: 8 }}>
         <Typography
           variant="h4"
-          component="h2"
           fontWeight="bold"
           textAlign="center"
           gutterBottom
@@ -146,7 +145,6 @@ const AboutPage: React.FC = () => {
       <Box sx={{ mb: 8 }}>
         <Typography
           variant="h4"
-          component="h2"
           fontWeight="bold"
           textAlign="center"
           gutterBottom

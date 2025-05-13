@@ -55,12 +55,7 @@ const Landing = () => {
               },
             }}
           >
-            <Typography
-              variant="h4"
-              component="h2"
-              fontWeight="bold"
-              sx={{ mb: 2 }}
-            >
+            <Typography variant="h4" fontWeight="bold" sx={{ mb: 2 }}>
               Ready to Upgrade Your Tech?
             </Typography>
             <Typography
