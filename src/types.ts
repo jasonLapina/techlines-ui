@@ -43,3 +43,17 @@ export interface User {
   _id: string;
   firstLogin: boolean;
 }
+
+export interface Order {
+  user: string;
+  items: {
+    name: string;
+    quantity: number;
+    price: number;
+    id: string;
+  }[];
+  shippingInformation: string;
+  totalPrice: number;
+  isDelivered: boolean;
+  deliveredAt?: Date;
+}

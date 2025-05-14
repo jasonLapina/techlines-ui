@@ -16,25 +16,11 @@ import AddressSelector from "../../components/AddressSelector";
 import { Address } from "../../redux/slices/addressSlice";
 import { OrderReview, PaymentForm } from "./Components";
 import { PaymentDetails, PaymentFormRef } from "./Components/PaymentForm";
-import { CartItem, User } from "../../types.ts";
+import { CartItem, Order, User } from "../../types.ts";
 import { useMutation } from "@tanstack/react-query";
 import { clearCart } from "../../redux/slices/cartSlice.ts";
 
 const steps = ["Shipping Information", "Payment Details", "Review Order"];
-
-interface Order {
-  user: string;
-  items: {
-    name: string;
-    quantity: number;
-    price: number;
-    id: string;
-  }[];
-  shippingInformation: string;
-  price: number;
-  isDelivered: boolean;
-  deliveredAt?: Date;
-}
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
@@ -102,6 +88,9 @@ const CheckoutPage = () => {
         method: "POST",
         body: JSON.stringify(data),
         credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
     },
     onSuccess: () => {
@@ -133,8 +122,8 @@ const CheckoutPage = () => {
     const payload = {
       user: userInfo._id,
       items: orderItems,
-      shippingInformation: selectedAddress,
-      price: orderTotal,
+      shippingInformation: JSON.stringify(selectedAddress),
+      totalPrice: orderTotal,
       isDelivered: false,
     };
 
