@@ -27,8 +27,8 @@ const Features = () => {
         {[
           {
             icon: <LocalShipping fontSize="large" color="primary" />,
-            title: "Fast Shipping",
-            description: "Get your order within 2 minutes",
+            title: "Free Shipping",
+            description: "You pay a grand total of $0 for shipping",
           },
           {
             icon: <Security fontSize="large" color="primary" />,

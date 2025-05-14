@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Divider,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { CartItem } from "../../../types";
@@ -22,19 +15,12 @@ const OrderReview: React.FC<OrderReviewProps> = ({ paymentDetails }) => {
   const { addresses, selectedAddressId } = address;
 
   const selectedAddress = addresses.find(
-    (addr: Address) => addr.id === selectedAddressId
+    (addr: Address) => addr.id === selectedAddressId,
   );
 
-  // Calculate subtotal
-  const subtotal = cart.items.reduce((acc: number, item: CartItem) => {
+  const total = cart.items.reduce((acc: number, item: CartItem) => {
     return acc + item.product.price * item.quantity;
   }, 0);
-
-  // Fixed shipping cost
-  const shippingCost = 5;
-
-  // Calculate total
-  const total = subtotal + shippingCost;
 
   return (
     <Box sx={{ mt: 2 }}>
@@ -52,13 +38,15 @@ const OrderReview: React.FC<OrderReviewProps> = ({ paymentDetails }) => {
             {selectedAddress ? (
               <Box>
                 <Typography variant="body1">
-                  {selectedAddress.alias} {selectedAddress.isDefault && "(Default)"}
+                  {selectedAddress.alias}{" "}
+                  {selectedAddress.isDefault && "(Default)"}
                 </Typography>
                 <Typography variant="body2">
                   {selectedAddress.street}
                 </Typography>
                 <Typography variant="body2">
-                  {selectedAddress.city}, {selectedAddress.state} {selectedAddress.postalCode}
+                  {selectedAddress.city}, {selectedAddress.state}{" "}
+                  {selectedAddress.postalCode}
                 </Typography>
                 <Typography variant="body2">
                   {selectedAddress.country}
@@ -105,10 +93,10 @@ const OrderReview: React.FC<OrderReviewProps> = ({ paymentDetails }) => {
                 <Box key={item.product._id}>
                   <Grid container spacing={2} alignItems="center">
                     <Grid size={{ xs: 2, sm: 1 }}>
-                      <img 
-                        src={item.product.images[0]} 
-                        alt={item.product.name} 
-                        style={{ width: "100%", maxWidth: "50px" }} 
+                      <img
+                        src={item.product.images[0]}
+                        alt={item.product.name}
+                        style={{ width: "100%", maxWidth: "50px" }}
                       />
                     </Grid>
                     <Grid size={{ xs: 6, sm: 7 }}>
@@ -139,28 +127,8 @@ const OrderReview: React.FC<OrderReviewProps> = ({ paymentDetails }) => {
             <Box sx={{ mt: 3 }}>
               <Grid container spacing={1}>
                 <Grid size={{ xs: 12 }}>
-                  <Stack 
-                    direction="row" 
-                    justifyContent="space-between" 
-                    sx={{ mb: 1 }}
-                  >
-                    <Typography variant="body1">Subtotal</Typography>
-                    <Typography variant="body1">${subtotal.toFixed(2)}</Typography>
-                  </Stack>
-
-                  <Stack 
-                    direction="row" 
-                    justifyContent="space-between"
-                    sx={{ mb: 1 }}
-                  >
-                    <Typography variant="body1">Shipping</Typography>
-                    <Typography variant="body1">${shippingCost.toFixed(2)}</Typography>
-                  </Stack>
-
-                  <Divider sx={{ my: 1 }} />
-
-                  <Stack 
-                    direction="row" 
+                  <Stack
+                    direction="row"
                     justifyContent="space-between"
                     sx={{ mb: 1 }}
                   >

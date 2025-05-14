@@ -16,10 +16,25 @@ import AddressSelector from "../../components/AddressSelector";
 import { Address } from "../../redux/slices/addressSlice";
 import { OrderReview, PaymentForm } from "./Components";
 import { PaymentDetails, PaymentFormRef } from "./Components/PaymentForm";
-import { clearCart } from "../../redux/slices/cartSlice";
-import { CartItem } from "../../types.ts";
+import { CartItem, User } from "../../types.ts";
+import { useMutation } from "@tanstack/react-query";
+import { clearCart } from "../../redux/slices/cartSlice.ts";
 
 const steps = ["Shipping Information", "Payment Details", "Review Order"];
+
+interface Order {
+  user: string;
+  items: {
+    name: string;
+    quantity: number;
+    price: number;
+    id: string;
+  }[];
+  shippingInformation: string;
+  price: number;
+  isDelivered: boolean;
+  deliveredAt?: Date;
+}
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
@@ -43,6 +58,10 @@ const CheckoutPage = () => {
     (state: RootState) => state.address,
   );
   const cart = useSelector((state: RootState) => state.cart);
+
+  const userInfo = useSelector(
+    (state: RootState) => state.user.userInfo,
+  ) as unknown as User;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -77,41 +96,49 @@ const CheckoutPage = () => {
     handleNext();
   };
 
+  const { mutate } = useMutation({
+    mutationFn: async (data: Order) => {
+      await fetch(`${import.meta.env.VITE_API_URL}/orders`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
+    },
+    onSuccess: () => {
+      setOrderPlaced(true);
+      dispatch(clearCart());
+      handleNext();
+    },
+  });
+
   const handlePlaceOrder = () => {
     // Get the selected address
     const selectedAddress = addresses.find(
       (addr: Address) => addr.id === selectedAddressId,
     );
 
-    // Calculate order total (subtotal + shipping)
-    const subtotal = cart.items.reduce(
+    const orderTotal = cart.items.reduce(
       (total: number, item: CartItem) =>
         total + item.product.price * item.quantity,
       0,
     );
-    const shippingCost = 5;
-    const orderTotal = subtotal + shippingCost;
 
-    // Log order information to the console
-    console.log("Order Submitted:");
-    console.log("Shipping Address:", selectedAddress);
-    console.log(
-      "Contact Info:",
-      selectedAddress
-        ? {
-            name: selectedAddress.alias,
-            phone: selectedAddress.phoneNumber,
-          }
-        : "No address selected",
-    );
-    console.log("Payment Details:", paymentDetails);
-    console.log("Order Items:", cart.items);
-    console.log("Order Total:", orderTotal.toFixed(2));
+    const orderItems = cart.items.map((item: CartItem) => ({
+      name: item.product.name,
+      quantity: item.quantity,
+      price: item.product.price * item.quantity,
+      id: item.product._id,
+    }));
 
-    // In a real application, you would send the order to the server here
-    setOrderPlaced(true);
-    dispatch(clearCart());
-    handleNext();
+    const payload = {
+      user: userInfo._id,
+      items: orderItems,
+      shippingInformation: selectedAddress,
+      price: orderTotal,
+      isDelivered: false,
+    };
+
+    mutate(payload);
   };
 
   const getStepContent = (step: number) => {
