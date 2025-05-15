@@ -1,12 +1,34 @@
-import { Box, Container, Grid, Link, Stack, Typography, IconButton, Divider, Button, TextField, InputAdornment } from "@mui/material";
-import { Facebook, Instagram, LinkedIn, Twitter, Send, KeyboardArrowUp, Email, Phone, LocationOn } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import {
+  Email,
+  Facebook,
+  Instagram,
+  KeyboardArrowUp,
+  LinkedIn,
+  LocationOn,
+  Phone,
+  Send,
+  Twitter,
+} from "@mui/icons-material";
 import Logo from "./Logo.tsx";
 
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
@@ -50,47 +72,60 @@ const Footer = () => {
       <Container maxWidth="lg" sx={{ pt: 8, pb: 4 }}>
         <Grid container spacing={4}>
           {/* Logo and description */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Box sx={{ mb: 2 }}>
               <Logo />
             </Box>
             <Typography variant="body2" sx={{ mb: 3, opacity: 0.8 }}>
               Your one-stop shop for the latest tech products and accessories.
-              We provide cutting-edge technology to enhance your digital lifestyle.
+              We provide cutting-edge technology to enhance your digital
+              lifestyle.
             </Typography>
             <Stack direction="row" spacing={1}>
-              <IconButton 
-                color="primary" 
-                sx={{ 
+              <IconButton
+                color="primary"
+                sx={{
                   backgroundColor: "rgba(255,255,255,0.1)",
-                  "&:hover": { backgroundColor: "primary.main", color: "white" }
+                  "&:hover": {
+                    backgroundColor: "primary.main",
+                    color: "white",
+                  },
                 }}
               >
                 <Facebook fontSize="small" />
               </IconButton>
-              <IconButton 
-                color="primary" 
-                sx={{ 
+              <IconButton
+                color="primary"
+                sx={{
                   backgroundColor: "rgba(255,255,255,0.1)",
-                  "&:hover": { backgroundColor: "primary.main", color: "white" }
+                  "&:hover": {
+                    backgroundColor: "primary.main",
+                    color: "white",
+                  },
                 }}
               >
                 <Twitter fontSize="small" />
               </IconButton>
-              <IconButton 
-                color="primary" 
-                sx={{ 
+              <IconButton
+                color="primary"
+                sx={{
                   backgroundColor: "rgba(255,255,255,0.1)",
-                  "&:hover": { backgroundColor: "primary.main", color: "white" }
+                  "&:hover": {
+                    backgroundColor: "primary.main",
+                    color: "white",
+                  },
                 }}
               >
                 <Instagram fontSize="small" />
               </IconButton>
-              <IconButton 
-                color="primary" 
-                sx={{ 
+              <IconButton
+                color="primary"
+                sx={{
                   backgroundColor: "rgba(255,255,255,0.1)",
-                  "&:hover": { backgroundColor: "primary.main", color: "white" }
+                  "&:hover": {
+                    backgroundColor: "primary.main",
+                    color: "white",
+                  },
                 }}
               >
                 <LinkedIn fontSize="small" />
@@ -99,68 +134,111 @@ const Footer = () => {
           </Grid>
 
           {/* Quick Links */}
-          <Grid item xs={12} sm={6} md={2}>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", position: "relative", pb: 1, "&:after": {
-              content: '""',
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "40px",
-              height: "2px",
-              backgroundColor: "primary.main"
-            } }}>
+          <Grid size={{ xs: 12, md: 2, sm: 6 }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{
+                fontWeight: "bold",
+                position: "relative",
+                pb: 1,
+                "&:after": {
+                  content: '""',
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "40px",
+                  height: "2px",
+                  backgroundColor: "primary.main",
+                },
+              }}
+            >
               Quick Links
             </Typography>
             <Stack spacing={1.5}>
-              <Link href="/" color="inherit" underline="hover" sx={{ 
-                display: "block", 
-                transition: "all 0.3s ease",
-                "&:hover": { pl: 1, color: "primary.main" }
-              }}>
+              <Link
+                href="/"
+                color="inherit"
+                underline="hover"
+                sx={{
+                  display: "block",
+                  transition: "all 0.3s ease",
+                  "&:hover": { pl: 1, color: "primary.main" },
+                }}
+              >
                 Home
               </Link>
-              <Link href="/products" color="inherit" underline="hover" sx={{ 
-                display: "block", 
-                transition: "all 0.3s ease",
-                "&:hover": { pl: 1, color: "primary.main" }
-              }}>
+              <Link
+                href="/products"
+                color="inherit"
+                underline="hover"
+                sx={{
+                  display: "block",
+                  transition: "all 0.3s ease",
+                  "&:hover": { pl: 1, color: "primary.main" },
+                }}
+              >
                 Products
               </Link>
-              <Link href="/about" color="inherit" underline="hover" sx={{ 
-                display: "block", 
-                transition: "all 0.3s ease",
-                "&:hover": { pl: 1, color: "primary.main" }
-              }}>
+              <Link
+                href="/about"
+                color="inherit"
+                underline="hover"
+                sx={{
+                  display: "block",
+                  transition: "all 0.3s ease",
+                  "&:hover": { pl: 1, color: "primary.main" },
+                }}
+              >
                 About
               </Link>
-              <Link href="/contact" color="inherit" underline="hover" sx={{ 
-                display: "block", 
-                transition: "all 0.3s ease",
-                "&:hover": { pl: 1, color: "primary.main" }
-              }}>
+              <Link
+                href="/contact"
+                color="inherit"
+                underline="hover"
+                sx={{
+                  display: "block",
+                  transition: "all 0.3s ease",
+                  "&:hover": { pl: 1, color: "primary.main" },
+                }}
+              >
                 Contact
               </Link>
-              <Link href="/cart" color="inherit" underline="hover" sx={{ 
-                display: "block", 
-                transition: "all 0.3s ease",
-                "&:hover": { pl: 1, color: "primary.main" }
-              }}>
+              <Link
+                href="/cart"
+                color="inherit"
+                underline="hover"
+                sx={{
+                  display: "block",
+                  transition: "all 0.3s ease",
+                  "&:hover": { pl: 1, color: "primary.main" },
+                }}
+              >
                 Cart
               </Link>
             </Stack>
           </Grid>
 
           {/* Contact Info */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", position: "relative", pb: 1, "&:after": {
-              content: '""',
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "40px",
-              height: "2px",
-              backgroundColor: "primary.main"
-            } }}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{
+                fontWeight: "bold",
+                position: "relative",
+                pb: 1,
+                "&:after": {
+                  content: '""',
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "40px",
+                  height: "2px",
+                  backgroundColor: "primary.main",
+                },
+              }}
+            >
               Contact Us
             </Typography>
             <Stack spacing={2}>
@@ -186,20 +264,30 @@ const Footer = () => {
           </Grid>
 
           {/* Newsletter */}
-          <Grid item xs={12} md={3}>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", position: "relative", pb: 1, "&:after": {
-              content: '""',
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "40px",
-              height: "2px",
-              backgroundColor: "primary.main"
-            } }}>
+          <Grid size={{ xs: 12, md: 3 }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{
+                fontWeight: "bold",
+                position: "relative",
+                pb: 1,
+                "&:after": {
+                  content: '""',
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "40px",
+                  height: "2px",
+                  backgroundColor: "primary.main",
+                },
+              }}
+            >
               Newsletter
             </Typography>
             <Typography variant="body2" sx={{ mb: 2, opacity: 0.8 }}>
-              Subscribe to receive updates on new products and special promotions.
+              Subscribe to receive updates on new products and special
+              promotions.
             </Typography>
             <TextField
               fullWidth
@@ -239,15 +327,32 @@ const Footer = () => {
 
         <Divider sx={{ my: 4, borderColor: "rgba(255,255,255,0.1)" }} />
 
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <Typography variant="body2" sx={{ opacity: 0.7 }}>
             © {new Date().getFullYear()} TechLines. All rights reserved.
           </Typography>
           <Stack direction="row" spacing={2}>
-            <Link href="/privacy" color="inherit" underline="hover" sx={{ opacity: 0.7, "&:hover": { opacity: 1 } }}>
+            <Link
+              href="/privacy"
+              color="inherit"
+              underline="hover"
+              sx={{ opacity: 0.7, "&:hover": { opacity: 1 } }}
+            >
               Privacy Policy
             </Link>
-            <Link href="/terms" color="inherit" underline="hover" sx={{ opacity: 0.7, "&:hover": { opacity: 1 } }}>
+            <Link
+              href="/terms"
+              color="inherit"
+              underline="hover"
+              sx={{ opacity: 0.7, "&:hover": { opacity: 1 } }}
+            >
               Terms of Service
             </Link>
           </Stack>

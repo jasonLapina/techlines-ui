@@ -118,7 +118,7 @@ const OrderHistoryPage = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <Typography variant="subtitle1" fontWeight="bold">
                       Order Date: {formatDate(order.createdAt)}
                     </Typography>
@@ -129,7 +129,7 @@ const OrderHistoryPage = () => {
                       Shipping Address: {order.shippingInformation}
                     </Typography>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <Divider sx={{ my: 2 }} />
                     <Typography variant="subtitle1" fontWeight="bold">
                       Items:
