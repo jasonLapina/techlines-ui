@@ -51,6 +51,8 @@ export default function ProfileMenu() {
 
   const { name, googleImage } = userInfo as unknown as User;
 
+  const AVATAR_SIZE = 32;
+
   return (
     <>
       <Tooltip title="Account settings" arrow>
@@ -60,7 +62,12 @@ export default function ProfileMenu() {
               referrerPolicy: "no-referrer",
             },
           }}
-          sx={{ cursor: "pointer", width: 40, height: 40, ml: 2 }}
+          sx={{
+            cursor: "pointer",
+            width: AVATAR_SIZE,
+            height: AVATAR_SIZE,
+            ml: 1,
+          }}
           onClick={handleClick}
           src={googleImage}
           alt={name}
@@ -121,7 +128,11 @@ export default function ProfileMenu() {
           Logout
         </MenuItem>
       </Menu>
-      <ProfileDialog open={dialogOpen} onClose={() => setDialogOpen(false)} userInfo={userInfo} />
+      <ProfileDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        userInfo={userInfo}
+      />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { AppBar, Box, Container, Stack, Toolbar } from "@mui/material";
+import { AppBar, Box, Stack, Toolbar } from "@mui/material";
 import ToggleFavorites from "./ToggleFavorites.tsx";
 import Logo from "./Logo.tsx";
 import Link from "./Link.tsx";
@@ -20,7 +20,7 @@ const Header = () => {
         boxShadow: 3,
       }}
     >
-      <Container maxWidth="xl">
+      <Box sx={{ maxWidth: "100%", px: { xs: 2, md: 6 } }}>
         <Toolbar>
           <Box
             sx={{
@@ -47,11 +47,15 @@ const Header = () => {
             >
               {pathname === "/products" && <ToggleFavorites />}
               <CartDialog />
-              {userInfo && <ProfileMenu />}
+              {userInfo && (
+                <Box ml={1}>
+                  <ProfileMenu />
+                </Box>
+              )}
             </Stack>
           </Box>
         </Toolbar>
-      </Container>
+      </Box>
     </AppBar>
   );
 };
