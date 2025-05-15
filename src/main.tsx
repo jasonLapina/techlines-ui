@@ -21,6 +21,7 @@ import CheckoutPage from "./pages/Checkout/CheckoutPage.tsx";
 import AboutPage from "./pages/About/AboutPage.tsx";
 import ContactPage from "./pages/Contact/ContactPage.tsx";
 import { SnackbarProvider } from "notistack";
+import OrderHistoryPage from "./pages/Orders/OrderHistoryPage.tsx";
 
 const client = new QueryClient();
 
@@ -58,6 +59,7 @@ createRoot(document.getElementById("root")!).render(
                   <Route path="/checkout" element={<CheckoutPage />} />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/order-history" element={<OrderHistoryPage />} />
                 </Route>
               </Routes>
             </Wrapper>
