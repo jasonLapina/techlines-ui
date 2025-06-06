@@ -7,8 +7,6 @@ import {
   AccordionSummary,
   Box,
   Chip,
-  Divider,
-  Grid,
   Paper,
   Table,
   TableBody,
@@ -85,7 +83,7 @@ const OrderHistoryPage = () => {
                 data.map(
                   (order: Order & { _id: string; createdAt: string }) => (
                     <TableRow key={order._id} hover>
-                      <TableCell>{order._id.substring(0, 10)}...</TableCell>
+                      <TableCell>{order._id}</TableCell>
                       <TableCell>{formatDate(order.createdAt)}</TableCell>
                       <TableCell>${order.totalPrice.toFixed(2)}</TableCell>
                       <TableCell>
@@ -111,68 +109,9 @@ const OrderHistoryPage = () => {
           {data.map((order: Order & { _id: string; createdAt: string }) => (
             <Accordion key={order._id} sx={{ mb: 2 }}>
               <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography>
-                  Order #{order._id.substring(0, 10)}... - $
-                  {order.totalPrice.toFixed(2)}
-                </Typography>
+                <Typography sx={{ fontWeight: "bold" }}>{order._id}</Typography>
               </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={2}>
-                  <Grid size={{ xs: 12 }}>
-                    <Typography variant="subtitle1" fontWeight="bold">
-                      Order Date: {formatDate(order.createdAt)}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight="bold">
-                      Status: {order.isDelivered ? "Delivered" : "Processing"}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight="bold">
-                      Shipping Address: {order.shippingInformation}
-                    </Typography>
-                  </Grid>
-                  <Grid size={{ xs: 12 }}>
-                    <Divider sx={{ my: 2 }} />
-                    <Typography variant="subtitle1" fontWeight="bold">
-                      Items:
-                    </Typography>
-                    <Table size="small">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Product</TableCell>
-                          <TableCell align="right">Quantity</TableCell>
-                          <TableCell align="right">Price</TableCell>
-                          <TableCell align="right">Total</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {order.items.map((item) => (
-                          <TableRow key={item.id}>
-                            <TableCell>{item.name}</TableCell>
-                            <TableCell align="right">{item.quantity}</TableCell>
-                            <TableCell align="right">
-                              ${item.price.toFixed(2)}
-                            </TableCell>
-                            <TableCell align="right">
-                              ${(item.price * item.quantity).toFixed(2)}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                        <TableRow>
-                          <TableCell
-                            colSpan={3}
-                            align="right"
-                            sx={{ fontWeight: "bold" }}
-                          >
-                            Total:
-                          </TableCell>
-                          <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                            ${order.totalPrice.toFixed(2)}
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </Grid>
-                </Grid>
-              </AccordionDetails>
+              <AccordionDetails></AccordionDetails>
             </Accordion>
           ))}
         </Box>
